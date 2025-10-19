@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+set -e
+. "$(dirname "$0")/husky.sh"
+
+echo "Running pre-commit hooks..."
+
+echo "Linting code..."
+npm run lint
+
+echo "Formatting code..."
+npm run format
+
+echo "Pre-commit hooks completed."
