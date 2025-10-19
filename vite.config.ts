@@ -7,8 +7,8 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
-    globals: true,            // allows `describe`, `it`, `expect` without imports
-    environment: 'jsdom',     // simulates browser environment
+    globals: true, // allows `describe`, `it`, `expect` without imports
+    environment: 'jsdom', // simulates browser environment
     setupFiles: './src/setupTests.ts', // optional, for global setup
     coverage: {
       reporter: ['text', 'json', 'html'], // optional code coverage
