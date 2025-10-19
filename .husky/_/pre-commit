@@ -8,6 +8,6 @@ echo "Linting code..."
 npm run lint
 
 echo "Formatting code..."
-npm run format
+npm run format:check
 
 echo "Pre-commit hooks completed."
