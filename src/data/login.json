@@ -1,0 +1,86 @@
+{
+  "page_id": "0001",
+  "page_name": "Login",
+  "sections": [
+    {
+      "section_id": "0001-01",
+      "section_name": "Login Form Section",
+      "content": {
+        "texts": [
+          { "title": "Welcome Back!" },
+          { "subtitle": "Welcome back. Access your dashboard to manage links and analytics" },
+          { "createAccountText": "New to LumenLink?" },
+          { "changeAuthText": "Or continue with" },
+          { "rememberText": "Remember me" }
+        ],
+        "fields": [
+          {
+            "field_id": "email",
+            "label": "Email address",
+            "type": "email",
+            "placeholder": "you@company.com"
+          },
+          {
+            "field_id": "password",
+            "label": "Password",
+            "type": "password",
+            "placeholder": "Enter your password"
+          }
+        ],
+        "buttons": [
+          {
+            "button_id": "signin-btn",
+            "text": "Sign in",
+            "action": "submit"
+          },
+          {
+            "button_id": "google-btn",
+            "text": "Continue with Google",
+            "action": "submit"
+          }
+        ],
+        "links": [
+          {
+            "link_id": "forgot-password-link",
+            "text": "Forgot Password?",
+            "url": "/forgot-password"
+          },
+          {
+            "link_id": "create-account-link",
+            "text": "Create Account",
+            "url": "/register"
+          }
+        ]
+      }
+    },
+    {
+      "section_id": "0001-02",
+      "section_name": "Background Image Testimonials Section",
+      "content": {
+        "testimonials": [
+          {
+            "id": "t001",
+            "avatar": "https://randomuser.me/api/portraits/women/57.jpg",
+            "name": "Alice Johnson",
+            "username": "@alicejohnson",
+            "testimonial": "This URL shortener has revolutionized the way we share links within our team. Highly recommended!"
+          },
+          {
+            "id": "t002",
+            "avatar": "https://randomuser.me/api/portraits/women/27.jpg",
+            "name": "Bob Smith",
+            "username": "@bobsmith",
+            "testimonial": "The ease of use and reliability of this service is unmatched. It has become an essential tool in my workflow."
+          },
+          {
+            "id": "t003",
+            "avatar": "https://randomuser.me/api/portraits/women/37.jpg",
+            "name": "Catherine Lee",
+            "username": "@catherinelee",
+            "testimonial": "I love how this URL shortener provides detailed analytics. It helps me track the performance of our campaigns effectively."
+          }
+        ]
+      }
+    }
+  ]
+}
