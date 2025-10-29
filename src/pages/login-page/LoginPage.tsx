@@ -1,5 +1,9 @@
 import { HeadingTwo } from '../../components/heading/Heading';
+import { TestimonialAuthCard } from '../../components/testimonial/Testimonial';
 import loginPage from '../../data/login.json';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
 
 const LoginPage = () => {
   return (
@@ -166,10 +170,26 @@ const LoginPage = () => {
         <div className="absolute inset-0 mt-4 mr-4 mb-4 ml-4 rounded-2xl border overflow-hidden border-neutral-800 bg-[url('https://images.unsplash.com/photo-1665652475985-37e285aeff53?w=2560&q=80')] bg-cover bg-center">
           <div className="absolute inset-0 bg-cover bg-center bg-[url(https://images.unsplash.com/photo-1665652475985-37e285aeff53?w=2560&amp;q=80)]"></div>
           <div className="bg-gradient-to-tr to-transparent from-black/60 via-black/30 absolute top-0 right-0 bottom-0 left-0"></div>
+          {/* Testimonials  */}
+          <div className="w-full absolute bottom-0 p-8 bg-amber-5">
+            <Swiper
+              spaceBetween={20}
+              slidesPerView={2}
+              pagination={{
+                clickable: true,
+              }}
+              modules={[Pagination]}
+            >
+              {loginPage?.sections?.[1]?.content?.testimonials?.map((testimonial) => {
+                return (
+                  <SwiperSlide>
+                    <TestimonialAuthCard {...testimonial} />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
         </div>
-
-        {/* Testimonials  */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-4 px-8">{}</div>
       </section>
     </div>
   );
