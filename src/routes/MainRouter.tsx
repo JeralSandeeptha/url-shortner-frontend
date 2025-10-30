@@ -4,6 +4,7 @@ import LoginPage from '../pages/login-page/LoginPage';
 import RegisterPage from '../pages/register-page/RegisterPage';
 import ForgotPasswordPage from '../pages/forgot-password-page/ForgotPasswordPage';
 import NotFoundPage from '../pages/not-found-page/NotFoundPage';
+import TermsAndConditionsPage from '../pages/terms-and-conditions-page/TermsAndConditionsPage';
 
 const MainRouter = () => {
   return (
@@ -13,6 +14,7 @@ const MainRouter = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
