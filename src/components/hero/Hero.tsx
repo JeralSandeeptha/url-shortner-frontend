@@ -1,11 +1,18 @@
 const Hero = () => {
   return (
-    <section className="bg-gradient-to-b from-neutral-950/0 to-black pt-32 pb-20" id="hero">
-      <div className="sm:px-6 max-w-7xl mr-auto ml-auto pr-4 pl-4">
+    <section
+      className="relative bg-[url('https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/bf784108-20b3-4841-98e8-586a808b754f_3840w.jpg')]
+             bg-cover bg-center bg-no-repeat
+             before:absolute before:inset-0
+             before:bg-gradient-to-b before:from-neutral-950/0 before:to-black
+             pt-32 pb-20 overflow-hidden"
+      id="hero"
+    >
+      <div className="z-20 relative sm:px-6 max-w-7xl mr-auto ml-auto pr-4 pl-4">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-medium rounded-full px-3 py-1.5 mb-6 text-neutral-400 bg-neutral-900">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-            <span className="">Now live: Teams, Smart Routing and QR Codes</span>
+            <span>Now live: Teams, Smart Routing and QR Codes</span>
           </div>
           <h1 className="sm:text-5xl md:text-6xl lg:text-7xl text-4xl font-semibold tracking-tight mb-6 text-neutral-100">
             Shorten, track, and manage links at scale
@@ -69,7 +76,7 @@ const Hero = () => {
                   <path d="M21 16h-4"></path>
                   <path d="M11 3H9"></path>
                 </svg>
-                <span className="">Shorten URL</span>
+                <span>Shorten URL</span>
               </button>
             </form>
 
@@ -163,7 +170,6 @@ const Hero = () => {
                     id="qr-image"
                     alt="QR code for short link"
                     className="w-24 h-24 rounded-md border p-1 border-neutral-800 bg-white"
-                    src=""
                   />
                   <div className="text-xs text-neutral-400">
                     <div className="font-medium mb-1 text-neutral-300">Scan to open</div>
