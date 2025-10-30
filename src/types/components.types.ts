@@ -8,4 +8,5 @@ export type TestimonialAuthCardProps = {
 
 export type HeaderProps = {
   title: string;
+  className?: string;
 };
