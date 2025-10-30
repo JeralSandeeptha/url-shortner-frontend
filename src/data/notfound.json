@@ -1,0 +1,35 @@
+{
+  "page_id": "0002",
+  "page_name": "NotFound",
+  "sections": [
+    {
+      "section_id": "0001-01",
+      "section_name": "NotFound Section",
+      "content": {
+        "elements": [
+          {
+            "element_id": "el-01",
+            "element_name": "",
+            "element_data": [{ "color": "bg-amber-500" }, { "title": "404 — Not found" }]
+          }
+        ],
+        "texts": [
+          { "title": "Page not found" },
+          { "subtitle": "The page you’re looking for doesn’t exist or has been moved." }
+        ],
+        "buttons": [
+          {
+            "button_id": "go-home-btn",
+            "text": "Go Home",
+            "url": "/"
+          },
+          {
+            "button_id": "contact-btn",
+            "text": "Contact Support",
+            "url": "/contact"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 import { HeadingTwo } from '../../components/heading/Heading';
 import { TestimonialAuthCard } from '../../components/testimonial/Testimonial';
-import registerPage from '../../data/register.json';
+import resetPasswordPage from '../../data/reset_password.json';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 
-const RegisterPage = () => {
+const ResetPasswordPage = () => {
   return (
     <div
       className="min-h-screen flex flex-col lg:flex-row bg-black"
@@ -22,23 +22,25 @@ const RegisterPage = () => {
 
             {/* Heading  */}
             <HeadingTwo
-              title={registerPage?.sections?.[0]?.content?.texts?.[0]?.title || 'Welcome Back'}
+              title={resetPasswordPage?.sections?.[0]?.content?.texts?.[0]?.title || 'Welcome Back'}
             />
             <p className="text-neutral-400">
-              {registerPage?.sections?.[0]?.content?.texts?.[1]?.subtitle}
+              {resetPasswordPage?.sections?.[0]?.content?.texts?.[1]?.subtitle}
             </p>
 
             {/* Form  */}
             <form className="space-y-5">
               <div>
                 <label className="text-sm font-medium text-neutral-400">
-                  {registerPage?.sections?.[0]?.content?.fields?.[0]?.label}
+                  {resetPasswordPage?.sections?.[0]?.content?.fields?.[0]?.label}
                 </label>
                 <div className="mt-2 flex-1 flex gap-2 focus-within:border-neutral-700 border rounded-lg pt-2.5 pr-3 pb-2.5 pl-3 gap-x-2 gap-y-2 items-center bg-neutral-950 border-neutral-800">
                   <input
-                    id={registerPage?.sections?.[0]?.content?.fields?.[0]?.field_id}
-                    type={registerPage?.sections?.[0]?.content?.fields?.[0]?.type}
-                    placeholder={registerPage?.sections?.[0]?.content?.fields?.[0]?.placeholder}
+                    id={resetPasswordPage?.sections?.[0]?.content?.fields?.[0]?.field_id}
+                    type={resetPasswordPage?.sections?.[0]?.content?.fields?.[0]?.type}
+                    placeholder={
+                      resetPasswordPage?.sections?.[0]?.content?.fields?.[0]?.placeholder
+                    }
                     className="placeholder:text-neutral-500 outline-none text-sm bg-transparent w-full flex-1 text-neutral-100"
                   />
                 </div>
@@ -46,13 +48,15 @@ const RegisterPage = () => {
 
               <div>
                 <label className="text-sm font-medium text-neutral-400">
-                  {registerPage?.sections?.[0]?.content?.fields?.[1]?.label}
+                  {resetPasswordPage?.sections?.[0]?.content?.fields?.[1]?.label}
                 </label>
                 <div className="mt-2 flex-1 flex gap-2 focus-within:border-neutral-700 border rounded-lg pt-2.5 pr-3 pb-2.5 pl-3 gap-x-2 gap-y-2 items-center relative bg-neutral-950 border-neutral-800">
                   <input
-                    id={registerPage?.sections?.[0]?.content?.fields?.[1]?.field_id}
-                    type={registerPage?.sections?.[0]?.content?.fields?.[1]?.type}
-                    placeholder={registerPage?.sections?.[0]?.content?.fields?.[1]?.placeholder}
+                    id={resetPasswordPage?.sections?.[0]?.content?.fields?.[1]?.field_id}
+                    type={resetPasswordPage?.sections?.[0]?.content?.fields?.[1]?.type}
+                    placeholder={
+                      resetPasswordPage?.sections?.[0]?.content?.fields?.[1]?.placeholder
+                    }
                     className="bg-transparent text-sm w-full flex-1 placeholder:text-neutral-500 outline-none text-neutral-100"
                   />
                   <button
@@ -81,84 +85,21 @@ const RegisterPage = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center gap-3 cursor-pointer select-none">
-                  <input type="checkbox" className="peer sr-only" />
-                  <span className="relative h-[18px] w-[18px] rounded-md border grid place-items-center transition-colors peer-checked:bg-emerald-500 peer-checked:border-emerald-500 border-neutral-700 bg-neutral-900">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="white"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      data-lucide="check"
-                      className="lucide lucide-check h-3.5 w-3.5 opacity-0 peer-checked:opacity-100 transition-opacity"
-                    >
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </span>
-                  <span className="text-neutral-300">
-                    {registerPage?.sections?.[0]?.content?.texts?.[4]?.agreeText}
-                  </span>
-                </label>
-                <a
-                  href={registerPage?.sections?.[0]?.content?.links?.[0]?.url}
-                  className="transition-colors hover:text-emerald-300 text-emerald-400"
-                >
-                  {registerPage?.sections?.[0]?.content?.links?.[0]?.text}
-                </a>
-              </div>
-
               <button
                 type="submit"
                 className="text-black bg-white transition-colors w-full border-neutral-800 border rounded-lg pt-3.5 pr-3 pb-3.5 pl-3 cursor-pointer"
               >
-                {registerPage?.sections?.[0]?.content?.buttons?.[0]?.text}
+                {resetPasswordPage?.sections?.[0]?.content?.buttons?.[0]?.text}
               </button>
             </form>
 
-            {/* Divider  */}
-            <div className="relative flex items-center justify-center">
-              <span className="w-24 border-t border-neutral-800"></span>
-              <span className="px-4 text-sm text-neutral-500 text-center">
-                {registerPage?.sections?.[0]?.content?.texts?.[3]?.changeAuthText}
-              </span>
-              <span className="w-24 border-t border-neutral-800"></span>
-            </div>
-
-            {/* Google sign in */}
-            <button className="text-white w-full flex items-center justify-center gap-3 rounded-lg py-3.5 px-3 border transition-colors border-neutral-800 bg-neutral-950 hover:bg-neutral-900 cursor-pointer">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                data-lucide="globe"
-                className="lucide lucide-globe w-[18px] h-[18px] text-neutral-300"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-                <path d="M2 12h20"></path>
-              </svg>
-              {registerPage?.sections?.[0]?.content?.buttons?.[1]?.text}
-            </button>
-
             <p className="flex items-center justify-center text-center text-sm text-neutral-500 gap-2">
-              {registerPage?.sections?.[0]?.content?.texts?.[2]?.createAccountText}
+              {resetPasswordPage?.sections?.[0]?.content?.texts?.[2]?.rememberPasswordText}
               <a
-                href={registerPage?.sections?.[0]?.content?.links?.[1]?.url}
+                href={resetPasswordPage?.sections?.[0]?.content?.links?.[0]?.url}
                 className="transition-colors hover:text-emerald-300 text-emerald-400"
               >
-                {registerPage?.sections?.[0]?.content?.links?.[1]?.text}
+                {resetPasswordPage?.sections?.[0]?.content?.links?.[0]?.text}
               </a>
             </p>
           </div>
@@ -180,7 +121,7 @@ const RegisterPage = () => {
               }}
               modules={[Pagination]}
             >
-              {registerPage?.sections?.[1]?.content?.testimonials?.map((testimonial) => {
+              {resetPasswordPage?.sections?.[1]?.content?.testimonials?.map((testimonial) => {
                 return (
                   <SwiperSlide>
                     <TestimonialAuthCard {...testimonial} />
@@ -195,4 +136,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default ResetPasswordPage;
