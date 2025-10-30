@@ -21,7 +21,7 @@ const Header = () => {
               <a className="transition-colors hover:text-neutral-100" href="#resources">
                 Resources
               </a>
-              <a className="transition-colors hover:text-neutral-100" href="#pricing">
+              <a className="transition-colors hover:text-neutral-100" href="/pricing">
                 Pricing
               </a>
             </nav>
