@@ -124,7 +124,7 @@ const LoginPage = () => {
             {/* Divider  */}
             <div className="relative flex items-center justify-center">
               <span className="w-24 border-t border-neutral-800"></span>
-              <span className="px-4 text-sm text-neutral-500">
+              <span className="px-4 text-sm text-neutral-500 text-center">
                 {loginPage?.sections?.[0]?.content?.texts?.[3]?.changeAuthText}
               </span>
               <span className="w-24 border-t border-neutral-800"></span>
