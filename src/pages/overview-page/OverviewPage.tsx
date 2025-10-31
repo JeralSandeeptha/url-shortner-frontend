@@ -85,7 +85,7 @@ const OverviewPage = () => {
       </header>
 
       {/* Content */}
-      <section className="sm:px-6 max-w-7xl mr-auto ml-auto pt-8 pr-4 pb-8 pl-4 text-neutral-200"> 
+      <section className="sm:px-6 max-w-7xl mr-auto ml-auto pt-8 pr-4 pb-8 pl-4 text-neutral-200">
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           {/* Center/Main column (spans 2) */}
           <div className="xl:col-span-2 space-y-6">
