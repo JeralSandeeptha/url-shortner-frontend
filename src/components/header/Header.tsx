@@ -1,3 +1,6 @@
+import { moveToLogin } from '../../utils/login';
+import { moveToRegister } from '../../utils/register';
+
 const Header = () => {
   return (
     <header className="fixed z-50 bg-black/80 border-neutral-800 border-b top-0 right-0 left-0 backdrop-blur-xl">
@@ -27,17 +30,17 @@ const Header = () => {
             </nav>
           </div>
           <div className="flex items-center gap-3 sm:gap-4">
-            <a
-              href="/login"
-              className="hidden md:inline-flex transition-colors hover:text-neutral-100 text-sm font-medium text-neutral-400"
+            <div
+              onClick={() => moveToLogin()}
+              className="cursor-pointer hidden md:inline-flex transition-colors hover:text-neutral-100 text-sm font-medium text-neutral-400"
             >
               Sign in
-            </a>
-            <a
-              href="/register"
-              className="hidden lg:inline-flex items-center gap-2 sm:px-4 transition-colors hover:bg-neutral-200 text-sm font-medium text-black bg-neutral-100 rounded-lg pt-2 pr-3 pb-2 pl-3"
+            </div>
+            <div
+              onClick={() => moveToRegister()}
+              className="cursor-pointer hidden lg:inline-flex items-center gap-2 sm:px-4 transition-colors hover:bg-neutral-200 text-sm font-medium text-black bg-neutral-100 rounded-lg pt-2 pr-3 pb-2 pl-3"
             >
-              <span className="">Get started</span>
+              <span>Get started</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -45,16 +48,16 @@ const Header = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 data-lucide="arrow-right"
                 className="lucide lucide-arrow-right w-3.5 h-3.5"
               >
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
               </svg>
-            </a>
+            </div>
             <button
               className="lg:hidden inline-flex transition-colors hover:text-neutral-100 hover:bg-neutral-900 text-neutral-400 rounded-lg pt-2 pr-2 pb-2 pl-2 items-center justify-center"
               id="mobile-menu-button"
@@ -66,9 +69,9 @@ const Header = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 data-lucide="menu"
                 className="lucide lucide-menu w-[24px] h-[24px]"
                 data-icon-replaced="true"
@@ -133,9 +136,9 @@ const Header = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 data-lucide="arrow-right"
                 className="lucide lucide-arrow-right w-3.5 h-3.5"
               >
