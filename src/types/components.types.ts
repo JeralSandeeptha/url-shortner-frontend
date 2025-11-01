@@ -10,3 +10,9 @@ export type HeaderProps = {
   title: string;
   className?: string;
 };
+
+export type DashboardHeaderProps = {
+  title: string;
+  isSubHeader?: boolean;
+  subTitle?: string;
+};
