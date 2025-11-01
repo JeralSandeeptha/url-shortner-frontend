@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import type { DashboardHeaderProps } from '../../types/components.types';
 
 const DashboardHeader = (props: DashboardHeaderProps) => {
@@ -28,7 +29,29 @@ const DashboardHeader = (props: DashboardHeaderProps) => {
                 <path d="M4 19h16"></path>
               </svg>
             </button>
-            <div className="text-xl font-semibold tracking-tight">{props.title}</div>
+            <div className="flex gap-2 gap-x-2 gap-y-2 items-center">
+              {props.isSubHeader && (
+                <Link
+                  to="/dashboard/links"
+                  className="hidden sm:inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-neutral-200"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    className="lucide lucide-arrow-left w-4 h-4"
+                  >
+                    <path d="m12 19-7-7 7-7"></path>
+                  </svg>
+                  {props.subTitle}
+                </Link>
+              )}
+              <div className="text-xl font-semibold tracking-tight">{props.title}</div>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2">
