@@ -1,13 +1,13 @@
-import { useState, type ReactNode } from "react";
-import type { Alert, AlertType } from "../../types/context.types";
-import { AlertContext } from "../contexts/AlertContext";
-import ReactDOM from "react-dom";
-import AlertComponent from "../../components/alert/Alert";
+import { useState, type ReactNode } from 'react';
+import type { Alert, AlertType } from '../../types/context.types';
+import { AlertContext } from '../contexts/AlertContext';
+import ReactDOM from 'react-dom';
+import AlertComponent from '../../components/alert/Alert';
 
 export const AlertProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [alerts, setAlerts] = useState<Alert[]>([]);
 
-  const addAlert = (message: string, type: AlertType = "info", timeout = 3000) => {
+  const addAlert = (message: string, type: AlertType = 'info', timeout = 3000) => {
     const id = Date.now().toString();
     setAlerts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => removeAlert(id), timeout);

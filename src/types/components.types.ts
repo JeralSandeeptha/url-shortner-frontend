@@ -1,4 +1,4 @@
-import type { AlertType } from "./context.types";
+import type { AlertType } from './context.types';
 
 export type TestimonialAuthCardProps = {
   id: string;
@@ -21,7 +21,7 @@ export type DashboardHeaderProps = {
 
 export type AlertProps = {
   id: string;
-  title: string
+  title: string;
   message: string;
   type: AlertType;
 };

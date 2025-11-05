@@ -19,7 +19,6 @@ const RegisterPage = () => {
   const { addAlert } = useAlert();
 
   const register = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(email, password);
     e.preventDefault();
 
     // sanitize fields
@@ -28,12 +27,12 @@ const RegisterPage = () => {
 
     // validate fields
     if (!validateEmail(sanitizedEmail)) {
-      alert('Please enter a valid email address.');
+      addAlert('Please enter a valid email address', 'warning');
       return;
     }
 
     if (!validatePassword(sanitizedPassword)) {
-      alert('Password must be at least 6 characters long.');
+      addAlert('Password must be at least 6 characters long', 'warning');
       return;
     }
 
@@ -46,10 +45,10 @@ const RegisterPage = () => {
         setEmail: setEmail,
         setPassword: setPassword,
         navigate: navigate,
-        addAlert: addAlert
+        addAlert: addAlert,
       });
     } else {
-      alert('You have to agree to our Terms and Conditions to proceed');
+      addAlert('You have to agree to our Terms and Conditions to proceed', 'warning');
     }
   };
 

@@ -8,7 +8,7 @@ const baseURL = config.VITE_API_URL;
 export const registerUser = async (props: registerUserProps) => {
   try {
     const res = await axiosClient.post(`${baseURL}/gateway/users/api/v1/user`, props.userDetails);
-    if(res.status === 201) {
+    if (res.status === 201) {
       props.setEmail('');
       props.setPassword('');
       props.navigate('/login');

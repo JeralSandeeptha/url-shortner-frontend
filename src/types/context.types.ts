@@ -7,7 +7,7 @@ export type AuthContextType = {
   setAuthenticated: Dispatch<React.SetStateAction<boolean>>;
 };
 
-export type AlertType = "success" | "error" | "info" | "warning";
+export type AlertType = 'success' | 'error' | 'info' | 'warning';
 
 export interface Alert {
   id: string;
@@ -19,4 +19,4 @@ export type AlertContextProps = {
   alerts: Alert[];
   addAlert: (message: string, type?: AlertType, timeout?: number) => void;
   removeAlert: (id: string) => void;
-}
+};

@@ -10,5 +10,5 @@ export type registerUserProps = {
   setEmail: Dispatch<SetStateAction<string>>;
   setPassword: Dispatch<SetStateAction<string>>;
   navigate: NavigateFunction;
-  addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void
+  addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
 };
