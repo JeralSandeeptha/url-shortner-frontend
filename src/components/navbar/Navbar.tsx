@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { DashboardLogo } from '../logo/Logo';
 
 const Navbar = () => {
   return (
@@ -7,25 +8,7 @@ const Navbar = () => {
       id="sidebar"
     >
       <div className="flex gap-2 h-16 border-neutral-900 border-b pr-5 pl-5 gap-x-2 gap-y-2 items-center">
-        <div className="h-8 w-8 rounded-lg bg-neutral-900 grid place-items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            data-lucide="link-2"
-            className="lucide lucide-link-2 w-4 h-4 text-emerald-400"
-          >
-            <path d="M9 17H7A5 5 0 0 1 7 7h2"></path>
-            <path d="M15 7h2a5 5 0 1 1 0 10h-2"></path>
-            <line x1="8" x2="16" y1="12" y2="12"></line>
-          </svg>
-        </div>
+        <DashboardLogo />
         <span className="text-lg font-semibold tracking-tight">LumenLink</span>
       </div>
       <nav className="pt-4 pr-3 pb-4 pl-3 space-y-1">

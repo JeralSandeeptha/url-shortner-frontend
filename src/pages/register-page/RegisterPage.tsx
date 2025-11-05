@@ -4,8 +4,52 @@ import registerPage from '../../data/register.json';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { useState } from 'react';
+import { registerUser } from '../../api/user-services/register-user/registerUser';
+import { sanitizeEmail, sanitizePassword } from '../../utils/sanitizeFields';
+import { validateEmail, validatePassword } from '../../utils/validateFields';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [aggreed, setAggreed] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const register = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(email, password);
+    e.preventDefault();
+
+    // sanitize fields
+    const sanitizedEmail = sanitizeEmail(email);
+    const sanitizedPassword = sanitizePassword(password);
+
+    // validate fields
+    if (!validateEmail(sanitizedEmail)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    if (!validatePassword(sanitizedPassword)) {
+      alert('Password must be at least 6 characters long.');
+      return;
+    }
+
+    if (aggreed) {
+      registerUser({
+        userDetails: {
+          email: sanitizedEmail || '',
+          password: sanitizedPassword || '',
+        },
+        setEmail: setEmail,
+        setPassword: setPassword,
+        navigate: navigate,
+      });
+    } else {
+      alert('You have to agree to our Terms and Conditions to proceed');
+    }
+  };
+
   return (
     <div
       className="min-h-screen flex flex-col lg:flex-row bg-black"
@@ -36,6 +80,8 @@ const RegisterPage = () => {
                 </label>
                 <div className="mt-2 flex-1 flex gap-2 focus-within:border-neutral-700 border rounded-lg pt-2.5 pr-3 pb-2.5 pl-3 gap-x-2 gap-y-2 items-center bg-neutral-950 border-neutral-800">
                   <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     id={registerPage?.sections?.[0]?.content?.fields?.[0]?.field_id}
                     type={registerPage?.sections?.[0]?.content?.fields?.[0]?.type}
                     placeholder={registerPage?.sections?.[0]?.content?.fields?.[0]?.placeholder}
@@ -50,11 +96,14 @@ const RegisterPage = () => {
                 </label>
                 <div className="mt-2 flex-1 flex gap-2 focus-within:border-neutral-700 border rounded-lg pt-2.5 pr-3 pb-2.5 pl-3 gap-x-2 gap-y-2 items-center relative bg-neutral-950 border-neutral-800">
                   <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     id={registerPage?.sections?.[0]?.content?.fields?.[1]?.field_id}
                     type={registerPage?.sections?.[0]?.content?.fields?.[1]?.type}
                     placeholder={registerPage?.sections?.[0]?.content?.fields?.[1]?.placeholder}
                     className="bg-transparent text-sm w-full flex-1 placeholder:text-neutral-500 outline-none text-neutral-100"
                   />
+                  {/* Toggle Password */}
                   <button
                     type="button"
                     id="togglePw"
@@ -68,9 +117,9 @@ const RegisterPage = () => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       data-lucide="eye"
                       className="lucide lucide-eye w-5 h-5"
                     >
@@ -83,7 +132,12 @@ const RegisterPage = () => {
 
               <div className="flex items-center justify-between text-sm">
                 <label className="flex items-center gap-3 cursor-pointer select-none">
-                  <input type="checkbox" className="peer sr-only" />
+                  <input
+                    type="checkbox"
+                    className="peer sr-only"
+                    checked={aggreed}
+                    onChange={(e) => setAggreed(e.target.checked)}
+                  />
                   <span className="relative h-[18px] w-[18px] rounded-md border grid place-items-center transition-colors peer-checked:bg-emerald-500 peer-checked:border-emerald-500 border-neutral-700 bg-neutral-900">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -92,9 +146,9 @@ const RegisterPage = () => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="white"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       data-lucide="check"
                       className="lucide lucide-check h-3.5 w-3.5 opacity-0 peer-checked:opacity-100 transition-opacity"
                     >
@@ -115,6 +169,7 @@ const RegisterPage = () => {
 
               <button
                 type="submit"
+                onClick={(e) => register(e)}
                 className="text-black bg-white transition-colors w-full border-neutral-800 border rounded-lg pt-3.5 pr-3 pb-3.5 pl-3 cursor-pointer"
               >
                 {registerPage?.sections?.[0]?.content?.buttons?.[0]?.text}
@@ -139,9 +194,9 @@ const RegisterPage = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 data-lucide="globe"
                 className="lucide lucide-globe w-[18px] h-[18px] text-neutral-300"
               >

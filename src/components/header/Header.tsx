@@ -1,5 +1,4 @@
-import { moveToLogin } from '../../utils/login';
-import { moveToRegister } from '../../utils/register';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -30,14 +29,14 @@ const Header = () => {
             </nav>
           </div>
           <div className="flex items-center gap-3 sm:gap-4">
-            <div
-              onClick={() => moveToLogin()}
+            <Link
+              to='/login'
               className="cursor-pointer hidden md:inline-flex transition-colors hover:text-neutral-100 text-sm font-medium text-neutral-400"
             >
               Sign in
-            </div>
-            <div
-              onClick={() => moveToRegister()}
+            </Link>
+            <Link
+              to='/register'
               className="cursor-pointer hidden lg:inline-flex items-center gap-2 sm:px-4 transition-colors hover:bg-neutral-200 text-sm font-medium text-black bg-neutral-100 rounded-lg pt-2 pr-3 pb-2 pl-3"
             >
               <span>Get started</span>
@@ -57,7 +56,7 @@ const Header = () => {
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
               </svg>
-            </div>
+            </Link>
             <button
               className="lg:hidden inline-flex transition-colors hover:text-neutral-100 hover:bg-neutral-900 text-neutral-400 rounded-lg pt-2 pr-2 pb-2 pl-2 items-center justify-center"
               id="mobile-menu-button"
