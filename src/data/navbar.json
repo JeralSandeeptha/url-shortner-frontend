@@ -3,16 +3,12 @@
   "page_name": "Navbar",
   "sections": [
     {
-        "section_id": "0001-01",
-        "section_name": "Navbar Section",
-        "content": {
-            "texts": [
-                { "logoText": "LumenLink" }
-            ],
-            "links": [
-                {}
-            ]
-        }
+      "section_id": "0001-01",
+      "section_name": "Navbar Section",
+      "content": {
+        "texts": [{ "logoText": "LumenLink" }],
+        "links": [{}]
+      }
     }
   ]
 }

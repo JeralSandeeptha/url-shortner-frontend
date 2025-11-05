@@ -30,13 +30,13 @@ const Header = () => {
           </div>
           <div className="flex items-center gap-3 sm:gap-4">
             <Link
-              to='/login'
+              to="/login"
               className="cursor-pointer hidden md:inline-flex transition-colors hover:text-neutral-100 text-sm font-medium text-neutral-400"
             >
               Sign in
             </Link>
             <Link
-              to='/register'
+              to="/register"
               className="cursor-pointer hidden lg:inline-flex items-center gap-2 sm:px-4 transition-colors hover:bg-neutral-200 text-sm font-medium text-black bg-neutral-100 rounded-lg pt-2 pr-3 pb-2 pl-3"
             >
               <span>Get started</span>
