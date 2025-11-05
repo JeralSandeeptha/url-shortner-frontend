@@ -9,12 +9,14 @@ import { registerUser } from '../../api/user-services/register-user/registerUser
 import { sanitizeEmail, sanitizePassword } from '../../utils/sanitizeFields';
 import { validateEmail, validatePassword } from '../../utils/validateFields';
 import { useNavigate } from 'react-router-dom';
+import { useAlert } from '../../hooks/useAlert';
 
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [aggreed, setAggreed] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { addAlert } = useAlert();
 
   const register = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log(email, password);
@@ -44,6 +46,7 @@ const RegisterPage = () => {
         setEmail: setEmail,
         setPassword: setPassword,
         navigate: navigate,
+        addAlert: addAlert
       });
     } else {
       alert('You have to agree to our Terms and Conditions to proceed');
