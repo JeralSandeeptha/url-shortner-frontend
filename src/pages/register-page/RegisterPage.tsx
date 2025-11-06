@@ -10,6 +10,8 @@ import { sanitizeEmail, sanitizePassword } from '../../utils/sanitizeFields';
 import { validateEmail, validatePassword } from '../../utils/validateFields';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../hooks/useAlert';
+import LoadingComponent from '../../components/loading-component/LoadingComponent';
+import { useLoading } from '../../hooks/useLoading';
 
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -17,6 +19,7 @@ const RegisterPage = () => {
   const [aggreed, setAggreed] = useState<boolean>(false);
   const navigate = useNavigate();
   const { addAlert } = useAlert();
+  const { isLoading, setIsLoading } = useLoading();
 
   const register = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -46,6 +49,7 @@ const RegisterPage = () => {
         setPassword: setPassword,
         navigate: navigate,
         addAlert: addAlert,
+        setIsLoading: setIsLoading,
       });
     } else {
       addAlert('You have to agree to our Terms and Conditions to proceed', 'warning');
@@ -57,6 +61,7 @@ const RegisterPage = () => {
       className="min-h-screen flex flex-col lg:flex-row bg-black"
       style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
+      {isLoading && <LoadingComponent />}
       {/* Left column: sign‑in form  */}
       <section className="flex-1 flex pt-8 pr-8 pb-8 pl-8 items-center justify-center">
         <div className="w-full max-w-md">

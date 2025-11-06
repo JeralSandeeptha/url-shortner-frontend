@@ -1,5 +1,14 @@
-import type { Dispatch } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import type Keycloak from 'keycloak-js';
+
+export type LoadingContextProps = {
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+};
+
+export type LoadingProviderProps = {
+  children: React.ReactNode;
+};
 
 export type AuthContextType = {
   keycloak: Keycloak | null;

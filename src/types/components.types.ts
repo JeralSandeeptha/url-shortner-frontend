@@ -13,6 +13,11 @@ export type HeaderProps = {
   className?: string;
 };
 
+export type SpinnerProps = {
+  size?: 'sm' | 'md' | 'lg' | 'xl' | number;
+  className?: string;
+};
+
 export type DashboardHeaderProps = {
   title: string;
   isSubHeader?: boolean;
