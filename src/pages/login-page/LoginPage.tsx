@@ -4,13 +4,59 @@ import loginPage from '../../data/login.json';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAlert } from '../../hooks/useAlert';
+import { useLoading } from '../../hooks/useLoading';
+import { sanitizeEmail, sanitizePassword } from '../../utils/sanitizeFields';
+import { validateEmail, validatePassword } from '../../utils/validateFields';
+import LoadingComponent from '../../components/loading-component/LoadingComponent';
+import { loginUser } from '../../api/user-services/login-user/loginUser';
 
 const LoginPage = () => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const navigate = useNavigate();
+  const { addAlert } = useAlert();
+  const { isLoading, setIsLoading } = useLoading();
+
+  const login = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    // sanitize fields
+    const sanitizedEmail = sanitizeEmail(email);
+    const sanitizedPassword = sanitizePassword(password);
+
+    // validate fields
+    if (!validateEmail(sanitizedEmail)) {
+      addAlert('Please enter a valid email address', 'warning');
+      return;
+    }
+
+    if (!validatePassword(sanitizedPassword)) {
+      addAlert('Password must be at least 6 characters long', 'warning');
+      return;
+    }
+
+    loginUser({
+      userDetails: {
+        email: sanitizedEmail || '',
+        password: sanitizedPassword || '',
+      },
+      setEmail: setEmail,
+      setPassword: setPassword,
+      navigate: navigate,
+      addAlert: addAlert,
+      setIsLoading: setIsLoading,
+    });
+  };
+
   return (
     <div
       className="min-h-screen flex flex-col lg:flex-row bg-black"
       style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
+      {isLoading && <LoadingComponent />}
       {/* Left column: sign‑in form  */}
       <section className="flex-1 flex pt-8 pr-8 pb-8 pl-8 items-center justify-center">
         <div className="w-full max-w-md">
@@ -36,6 +82,7 @@ const LoginPage = () => {
                 </label>
                 <div className="mt-2 flex-1 flex gap-2 focus-within:border-neutral-700 border rounded-lg pt-2.5 pr-3 pb-2.5 pl-3 gap-x-2 gap-y-2 items-center bg-neutral-950 border-neutral-800">
                   <input
+                    onChange={(e) => setEmail(e.target.value)}
                     id={loginPage?.sections?.[0]?.content?.fields?.[0]?.field_id}
                     type={loginPage?.sections?.[0]?.content?.fields?.[0]?.type}
                     placeholder={loginPage?.sections?.[0]?.content?.fields?.[0]?.placeholder}
@@ -50,6 +97,7 @@ const LoginPage = () => {
                 </label>
                 <div className="mt-2 flex-1 flex gap-2 focus-within:border-neutral-700 border rounded-lg pt-2.5 pr-3 pb-2.5 pl-3 gap-x-2 gap-y-2 items-center relative bg-neutral-950 border-neutral-800">
                   <input
+                    onChange={(e) => setPassword(e.target.value)}
                     id={loginPage?.sections?.[0]?.content?.fields?.[1]?.field_id}
                     type={loginPage?.sections?.[0]?.content?.fields?.[1]?.type}
                     placeholder={loginPage?.sections?.[0]?.content?.fields?.[1]?.placeholder}
@@ -115,6 +163,7 @@ const LoginPage = () => {
 
               <button
                 type="submit"
+                onClick={(e) => login(e)}
                 className="text-black bg-white transition-colors w-full border-neutral-800 border rounded-lg pt-3.5 pr-3 pb-3.5 pl-3 cursor-pointer"
               >
                 {loginPage?.sections?.[0]?.content?.buttons?.[0]?.text}

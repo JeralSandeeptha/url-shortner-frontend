@@ -13,3 +13,15 @@ export type registerUserProps = {
   addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
+
+export type loginUserProps = {
+  userDetails: {
+    email: string;
+    password: string;
+  };
+  setEmail: Dispatch<SetStateAction<string>>;
+  setPassword: Dispatch<SetStateAction<string>>;
+  navigate: NavigateFunction;
+  addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+};
