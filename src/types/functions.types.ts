@@ -25,3 +25,9 @@ export type loginUserProps = {
   addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
+
+export type logoutUserProps = {
+  navigate: NavigateFunction;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
+};

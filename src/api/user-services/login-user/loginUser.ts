@@ -19,7 +19,7 @@ export const loginUser = async (props: loginUserProps) => {
       props.setIsLoading(false);
       props.addAlert('Login Successfully!', 'success');
       logger.info(res.data);
-      // props.navigate('/dashboard');
+      props.navigate('/dashboard');
     } else {
       props.setIsLoading(false);
       logger.error('Something wrong with the login');

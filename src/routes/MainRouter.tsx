@@ -6,6 +6,13 @@ import ForgotPasswordPage from '../pages/forgot-password-page/ForgotPasswordPage
 import NotFoundPage from '../pages/not-found-page/NotFoundPage';
 import TermsAndConditionsPage from '../pages/terms-and-conditions-page/TermsAndConditionsPage';
 import PricingPage from '../pages/pricing-page/PricingPage';
+import DashboardPage from '../pages/dashboard-page/DashboardPage';
+import OverviewPage from '../pages/overview-page/OverviewPage';
+import LinksPage from '../pages/links-page/LinksPage';
+import MicrositePage from '../pages/microsite-page/MicrositePage';
+import CampaignsPage from '../pages/campaigns-page/CampaignsPage';
+import CustomLinkPage from '../pages/custom-link-page/CustomLinkPage';
+import SettingsPage from '../pages/settings-page/SettingsPage';
 
 const MainRouter = () => {
   return (
@@ -17,6 +24,14 @@ const MainRouter = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/dashboard" element={<DashboardPage />}>
+          <Route path="" element={<OverviewPage />} />
+          <Route path="links" element={<LinksPage />} />
+          <Route path="microsite" element={<MicrositePage />} />
+          <Route path="campaigns" element={<CampaignsPage />} />
+          <Route path="custom-link" element={<CustomLinkPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,25 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { DashboardLogo } from '../logo/Logo';
+import { logoutUser } from '../../api/user-services/logout-user/logoutUser';
+import { useLoading } from '../../hooks/useLoading';
+import { useAlert } from '../../hooks/useAlert';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { addAlert } = useAlert();
+  const { setIsLoading } = useLoading();
+
+  const handleLogin = () => {
+    const confirmed = window.confirm('Are you sure you want to log out?');
+    if (!confirmed) return;
+
+    logoutUser({
+      addAlert,
+      setIsLoading,
+      navigate,
+    });
+  };
+
   return (
     <aside
       className="fixed z-40 hidden lg:flex flex-col bg-neutral-950/80 w-72 border-neutral-900 border-r top-0 bottom-0 left-0 backdrop-blur-xl"
@@ -177,7 +195,9 @@ const Navbar = () => {
             <path d="M21 12H9"></path>
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
           </svg>
-          <span className="text-sm font-medium">Log out</span>
+          <span className="text-sm font-medium" onClick={handleLogin}>
+            Log out
+          </span>
         </a>
       </div>
     </aside>
