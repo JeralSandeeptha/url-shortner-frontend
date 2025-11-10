@@ -13,18 +13,69 @@ import MicrositePage from '../pages/microsite-page/MicrositePage';
 import CampaignsPage from '../pages/campaigns-page/CampaignsPage';
 import CustomLinkPage from '../pages/custom-link-page/CustomLinkPage';
 import SettingsPage from '../pages/settings-page/SettingsPage';
+import ProtectedRoute from '../components/protected-route/ProtectedRoute';
+import PublicRoute from '../components/public-route/PublicRoute';
 
 const MainRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
-        <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/dashboard" element={<DashboardPage />}>
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <HomePage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <RegisterPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute>
+              <ForgotPasswordPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/terms-and-conditions"
+          element={
+            <PublicRoute>
+              <TermsAndConditionsPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/pricing"
+          element={
+            <PublicRoute>
+              <PricingPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        >
           <Route path="" element={<OverviewPage />} />
           <Route path="links" element={<LinksPage />} />
           <Route path="microsite" element={<MicrositePage />} />

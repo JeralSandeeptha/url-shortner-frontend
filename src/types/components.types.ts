@@ -30,3 +30,11 @@ export type AlertProps = {
   message: string;
   type: AlertType;
 };
+
+export type ProtectedRouteProps = {
+  children: React.ReactNode;
+};
+
+export type PublicRouteProps = {
+  children: React.ReactNode;
+};
