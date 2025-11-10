@@ -9,9 +9,12 @@ export const logoutUser = async (props: logoutUserProps) => {
   props.setIsLoading(true);
   try {
     const res = await axiosClient.post(`${baseURL}/gateway/users/api/v1/user/logout`);
-    props.addAlert('Logout Successfully!', 'success');
-    props.navigate('/');
-    console.log(res.data);
+    if (res.data.statusCode === 202) {
+      props.setIsLoading(false);
+      props.addAlert('Logout Successfully!', 'success');
+      props.navigate('/');
+      console.log(res.data);
+    }
   } catch (error) {
     logger.error(error);
     props.setIsLoading(false);
