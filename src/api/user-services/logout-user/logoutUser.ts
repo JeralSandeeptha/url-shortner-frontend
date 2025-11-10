@@ -13,6 +13,7 @@ export const logoutUser = async (props: logoutUserProps) => {
       props.setIsLoading(false);
       props.addAlert('Logout Successfully!', 'success');
       props.navigate('/');
+      props.setAuthenticated(false);
       console.log(res.data);
     }
   } catch (error) {

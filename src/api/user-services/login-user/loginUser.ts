@@ -16,9 +16,10 @@ export const loginUser = async (props: loginUserProps) => {
     if (res.status === 202) {
       props.setEmail('');
       props.setPassword('');
-      props.setIsLoading(false);
       props.addAlert('Login Successfully!', 'success');
       logger.info(res.data);
+      props.setAuthenticated(true);
+      props.setIsLoading(false);
       props.navigate('/dashboard');
     } else {
       props.setIsLoading(false);

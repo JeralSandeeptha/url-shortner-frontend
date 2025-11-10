@@ -24,10 +24,16 @@ export type loginUserProps = {
   navigate: NavigateFunction;
   addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setAuthenticated: Dispatch<SetStateAction<boolean>>;
 };
 
 export type logoutUserProps = {
   navigate: NavigateFunction;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
+  setAuthenticated: Dispatch<SetStateAction<boolean>>;
+};
+
+export type checkSessionProps = {
+  setAuthenticated: Dispatch<SetStateAction<boolean>>;
 };

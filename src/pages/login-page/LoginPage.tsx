@@ -12,6 +12,7 @@ import { sanitizeEmail, sanitizePassword } from '../../utils/sanitizeFields';
 import { validateEmail, validatePassword } from '../../utils/validateFields';
 import LoadingComponent from '../../components/loading-component/LoadingComponent';
 import { loginUser } from '../../api/user-services/login-user/loginUser';
+import { useAuth } from '../../hooks/useAuth';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -19,6 +20,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { addAlert } = useAlert();
   const { isLoading, setIsLoading } = useLoading();
+  const { setAuthenticated } = useAuth();
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -48,6 +50,7 @@ const LoginPage = () => {
       navigate: navigate,
       addAlert: addAlert,
       setIsLoading: setIsLoading,
+      setAuthenticated: setAuthenticated,
     });
   };
 
