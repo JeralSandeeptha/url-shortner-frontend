@@ -22,7 +22,7 @@ const Navbar = () => {
       setIsLoading,
       navigate,
       setAuthenticated,
-      clearLocalStorageItem
+      clearLocalStorageItem,
     });
   };
 

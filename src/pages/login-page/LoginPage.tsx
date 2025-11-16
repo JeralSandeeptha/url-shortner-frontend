@@ -56,7 +56,7 @@ const LoginPage = () => {
       setIsLoading: setIsLoading,
       setAuthenticated: setAuthenticated,
       setLocalStorageItem: setLocalStorageItem,
-      setUser: setUser
+      setUser: setUser,
     });
   };
 

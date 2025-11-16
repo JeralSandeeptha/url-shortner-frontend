@@ -44,7 +44,7 @@ export type checkSessionProps = {
 
 export type getSingleUserProps = {
   userId: string;
-  setUserDetails: Dispatch<SetStateAction<UserDetails | undefined>>; 
+  setUserDetails: Dispatch<SetStateAction<UserDetails | undefined>>;
 };
 
 export type updateUserPreferencesProps = {

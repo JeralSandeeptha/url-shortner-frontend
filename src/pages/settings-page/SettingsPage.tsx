@@ -75,7 +75,7 @@ const SettingsPage = () => {
     });
     getUserData();
   };
-  
+
   const updateProfile = () => {
     updateUserProfile({
       addAlert: addAlert,
@@ -288,7 +288,10 @@ const SettingsPage = () => {
                 </div>
 
                 <div className="mt-6 flex items-center justify-end">
-                  <button onClick={updateProfile} className="cursor-pointer settings-save inline-flex items-center gap-2 rounded-lg bg-neutral-100 text-black px-4 py-2.5 text-sm font-medium hover:bg-neutral-200">
+                  <button
+                    onClick={updateProfile}
+                    className="cursor-pointer settings-save inline-flex items-center gap-2 rounded-lg bg-neutral-100 text-black px-4 py-2.5 text-sm font-medium hover:bg-neutral-200"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"

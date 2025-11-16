@@ -1,4 +1,4 @@
-import type { Timezone } from "../types/constants.types";
+import type { Timezone } from '../types/constants.types';
 
 export const timezones: Timezone[] = [
   { value: 'UTC-12:00', label: 'UTC-12:00 — Baker Island Time' },
