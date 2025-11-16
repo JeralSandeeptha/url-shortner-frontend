@@ -1,7 +1,26 @@
 import { Link } from 'react-router-dom';
 import type { DashboardHeaderProps } from '../../types/components.types';
+import type { UserDetails } from '../../types/interface.types';
+import { useEffect, useState } from 'react';
+import { useUser } from '../../hooks/useUser';
+import { getSingleUser } from '../../api/user-services/get-user/getSingleUser';
 
 const DashboardHeader = (props: DashboardHeaderProps) => {
+  const [userDetails, setUserDetails] = useState<UserDetails | undefined>(undefined);
+
+  const { user } = useUser();
+
+  const getUserData = () => {
+    getSingleUser({
+      setUserDetails: setUserDetails,
+      userId: user,
+    });
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
     <header className="sticky z-30 bg-black/80 border-neutral-900 border-b top-0 backdrop-blur-xl text-neutral-200">
       <div className="sm:px-6 max-w-7xl mr-auto ml-auto pr-4 pl-4">
@@ -95,11 +114,14 @@ const DashboardHeader = (props: DashboardHeaderProps) => {
                 <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
               </svg>
             </button>
-            <button className="rounded-full border border-neutral-800 p-0.5">
+            <button className="cursor-pointer rounded-full border border-neutral-800">
               <img
-                src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&amp;w=256&amp;auto=format&amp;fit=crop"
                 alt="avatar"
                 className="cursor-pointer w-8 h-8 rounded-full"
+                src={
+                  userDetails?.image ??
+                  'https://images.unsplash.com/photo-1728577740843-5f29c7586afe?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                }
               />
             </button>
           </div>

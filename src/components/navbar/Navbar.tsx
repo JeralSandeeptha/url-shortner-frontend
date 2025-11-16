@@ -4,12 +4,14 @@ import { logoutUser } from '../../api/user-services/logout-user/logoutUser';
 import { useLoading } from '../../hooks/useLoading';
 import { useAlert } from '../../hooks/useAlert';
 import { useAuth } from '../../hooks/useAuth';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { addAlert } = useAlert();
   const { setIsLoading } = useLoading();
   const { setAuthenticated } = useAuth();
+  const { clearLocalStorageItem } = useLocalStorage();
 
   const handleLogout = () => {
     const confirmed = window.confirm('Are you sure you want to log out?');
@@ -20,6 +22,7 @@ const Navbar = () => {
       setIsLoading,
       navigate,
       setAuthenticated,
+      clearLocalStorageItem
     });
   };
 

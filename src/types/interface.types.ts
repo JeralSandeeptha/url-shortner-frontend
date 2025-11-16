@@ -1,0 +1,21 @@
+export type UserDetails = {
+  user_id: string;
+  keycloak_id: string;
+  firstName: string;
+  lastName: string;
+  image: string;
+  email: string;
+  address: string;
+  username: string;
+  biography: string;
+  timeZone: string;
+  createdAt: string;
+  updatedAt: string;
+  aggreed: boolean;
+  productUpdates: boolean;
+  securityAlerts: boolean;
+  weeklySummary: boolean;
+  twoFactorAuth: boolean;
+  emailVerified: boolean;
+  enabled: boolean;
+};

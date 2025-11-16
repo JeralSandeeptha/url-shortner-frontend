@@ -13,6 +13,8 @@ import { validateEmail, validatePassword } from '../../utils/validateFields';
 import LoadingComponent from '../../components/loading-component/LoadingComponent';
 import { loginUser } from '../../api/user-services/login-user/loginUser';
 import { useAuth } from '../../hooks/useAuth';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { useUser } from '../../hooks/useUser';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -21,6 +23,8 @@ const LoginPage = () => {
   const { addAlert } = useAlert();
   const { isLoading, setIsLoading } = useLoading();
   const { setAuthenticated } = useAuth();
+  const { setLocalStorageItem } = useLocalStorage();
+  const { setUser } = useUser();
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -51,6 +55,8 @@ const LoginPage = () => {
       addAlert: addAlert,
       setIsLoading: setIsLoading,
       setAuthenticated: setAuthenticated,
+      setLocalStorageItem: setLocalStorageItem,
+      setUser: setUser
     });
   };
 

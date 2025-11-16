@@ -5,7 +5,16 @@ export type LoadingContextProps = {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
+export type UserContextProps = {
+  user: string;
+  setUser: Dispatch<SetStateAction<string>>;
+};
+
 export type LoadingProviderProps = {
+  children: React.ReactNode;
+};
+
+export type UserProviderProps = {
   children: React.ReactNode;
 };
 

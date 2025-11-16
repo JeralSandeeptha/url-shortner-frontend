@@ -14,7 +14,8 @@ export const logoutUser = async (props: logoutUserProps) => {
       props.addAlert('Logout Successfully!', 'success');
       props.navigate('/');
       props.setAuthenticated(false);
-      console.log(res.data);
+      props.clearLocalStorageItem('user-id');
+      logger.info(res.data);
     }
   } catch (error) {
     logger.error(error);
