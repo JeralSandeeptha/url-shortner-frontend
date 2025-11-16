@@ -54,6 +54,15 @@ export type updateUserPreferencesProps = {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
+export type resetPasswordProps = {
+  userId: string;
+  email: string;
+  currentPassword: string;
+  newPassword: string;
+  addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+};
+
 export type updateSecurityProps = {
   userId: string;
   user: UserDetails | undefined;

@@ -15,6 +15,7 @@ import { updateUerPreferences } from '../../api/user-services/update-user-prefer
 import LoadingComponent from '../../components/loading-component/LoadingComponent';
 import { updateUserSecurity } from '../../api/user-services/update-security/updateSecurity';
 import { updateUserProfile } from '../../api/user-services/update-profile/updateUserProfile';
+import { resetPassword } from '../../api/user-services/reset-password/resetPassword';
 
 const SettingsPage = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | undefined>(undefined);
@@ -48,11 +49,29 @@ const SettingsPage = () => {
   };
 
   const updatePassword = () => {
-    console.log('update password');
-    if (newPassword === confirmPassword) {
-      console.log('Password updated');
+    if (
+      newPassword.trim().length === 0 ||
+      confirmPassword.trim().length === 0 ||
+      currentPassword.trim().length === 0
+    ) {
+      addAlert('Please fill all the fields', 'error');
     } else {
-      addAlert('New password and Confirm password are not match', 'error');
+      if (newPassword === confirmPassword) {
+        if (newPassword.trim().length >= 6) {
+          resetPassword({
+            userId: user,
+            email: userDetails?.email ?? '',
+            currentPassword: currentPassword,
+            newPassword: newPassword,
+            setIsLoading: setIsLoading,
+            addAlert: addAlert,
+          });
+        } else {
+          addAlert('Password must be at least 6 characters long', 'error');
+        }
+      } else {
+        addAlert('New password and Confirm password are not match', 'error');
+      }
     }
   };
 
