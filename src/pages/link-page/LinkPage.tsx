@@ -7,11 +7,14 @@ import { useAlert } from '../../hooks/useAlert';
 import { dateFormatter } from '../../utils/date';
 import { deleteLink } from '../../api/link-services/delete-link/deleteLink';
 import { useLoading } from '../../hooks/useLoading';
+import { updateLink } from '../../api/link-services/update-link/updatelink';
+import UpdateLinkModal from '../../components/update-link-modal/UpdateLinkModal';
 
 const LinkPage = () => {
   const siteBaseURL = 'http://localhost:5173';
   const { linkId } = useParams();
   const [link, setLink] = useState<Link | undefined>(undefined);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   const { addAlert } = useAlert();
   const { setIsLoading } = useLoading();
@@ -56,6 +59,22 @@ const LinkPage = () => {
   useEffect(() => {
     getLinkDetails();
   }, [linkId]);
+
+  const handleUpdateLink = (updatedData: {
+    status: 'active' | 'inactive';
+    tags: string[];
+    long_url: string;
+  }) => {
+    if (!linkId) return;
+    updateLink({
+      linkId: linkId,
+      updateData: updatedData,
+      addAlert: addAlert,
+      setIsLoading: setIsLoading,
+      setLink: setLink,
+    });
+    setIsUpdateModalOpen(false);
+  };
 
   return (
     <>
@@ -548,7 +567,7 @@ const LinkPage = () => {
 
                 <button
                   id="update-link"
-                  onClick={() => {}}
+                  onClick={() => setIsUpdateModalOpen(true)}
                   className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-blue-500/10 text-blue-400 px-3 py-1.5 text-sm border border-blue-500/30 hover:bg-blue-500/20"
                 >
                   <svg
@@ -635,6 +654,14 @@ const LinkPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Update Link Modal */}
+      <UpdateLinkModal
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+        link={link}
+        onUpdate={handleUpdateLink}
+      />
     </>
   );
 };

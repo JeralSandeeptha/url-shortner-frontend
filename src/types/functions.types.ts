@@ -127,3 +127,15 @@ export type createLinkProps = {
   navigate?: NavigateFunction;
   setLinkData: Dispatch<SetStateAction<CreateLinkFields | undefined>>;
 };
+
+export type updateLinkProps = {
+  linkId: string;
+  updateData: {
+    status: 'active' | 'inactive';
+    tags: string[];
+    long_url: string;
+  };
+  addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setLink: Dispatch<SetStateAction<Link | undefined>>;
+};
