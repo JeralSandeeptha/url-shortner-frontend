@@ -114,9 +114,9 @@ const CreateLinkPage = () => {
                 </span>
                 <span
                   id="status-badge"
-                  className="inline-flex items-center rounded-md border border-emerald-900/40 bg-emerald-900/20 text-emerald-300 px-2 py-0.5 text-[11px]"
+                  className={`${linkData?.status === 'active' ? 'border-emerald-900/40 bg-emerald-900/20 text-emerald-300' : 'border-red-900/40 bg-red-900/20 text-red-300'} inline-flex items-center rounded-md border px-2 py-0.5 text-[11px]`}
                 >
-                  Active
+                  {linkData?.status === 'active' ? 'Active' : 'Paused'}
                 </span>
               </div>
             </div>
@@ -558,8 +558,8 @@ const CreateLinkPage = () => {
                   <div className="mt-2 text-xs text-neutral-500">Your short link</div>
                   <div className="mt-2 flex items-center justify-between gap-2 rounded-md border border-neutral-800 bg-neutral-900 px-3 py-2">
                     <div className="truncate text-sm" id="preview-url">
-                      {linkData?.short_url.trim().length
-                        ? `${siteBaseURL}/${linkData.short_url}`
+                      {linkData?.short_url?.trim()?.length
+                        ? `${siteBaseURL}/${linkData?.short_url}`
                         : 'No valid URL yet'}
                     </div>
                     <button
