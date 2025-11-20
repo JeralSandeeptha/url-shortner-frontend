@@ -1,7 +1,102 @@
+import { useRef, useState } from 'react';
 import DashboardHeader from '../../components/dashboard-header/DashboardHeader';
 import { linkStatus } from '../../constants/link-status';
+import { useUser } from '../../hooks/useUser';
+import { createLink } from '../../api/link-services/create-link/createLink';
+import { useAlert } from '../../hooks/useAlert';
+import type { CreateLinkFields } from '../../types/interface.types';
+import { useLoading } from '../../hooks/useLoading';
+import { useNavigate } from 'react-router-dom';
 
 const CreateLinkPage = () => {
+  const siteBaseURL = 'http://localhost:5173';
+
+  const { user } = useUser();
+  const { addAlert } = useAlert();
+  const { setIsLoading } = useLoading();
+  const navigate = useNavigate();
+
+  const [linkData, setLinkData] = useState<CreateLinkFields>();
+  const [tagInput, setTagInput] = useState<string>('');
+
+  const mainShortURLCopy = useRef<HTMLInputElement | null>(null);
+
+  const copyOriginalURL = async (inputRef: HTMLInputElement) => {
+    if (!inputRef.value) return;
+    const value = inputRef.value;
+
+    try {
+      await navigator.clipboard.writeText(value);
+      addAlert('Copied to clipboard', 'success');
+    } catch {
+      addAlert('Failed copy to clipboard', 'error');
+    }
+  };
+
+  const resetFormData = () => {
+    setLinkData({
+      long_url: '',
+      short_url: '',
+      status: 'active',
+      campaignId: '',
+      tags: [],
+      userId: '',
+    });
+    setTagInput('');
+  };
+
+  const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && tagInput.trim()) {
+      e.preventDefault();
+      const newTag = tagInput.trim();
+      setLinkData((prev) => {
+        const currentTags = prev?.tags ?? [];
+        // Avoid duplicate tags
+        if (currentTags.includes(newTag)) {
+          return prev;
+        }
+        return prev
+          ? { ...prev, tags: [...currentTags, newTag] }
+          : ({ tags: [newTag] } as CreateLinkFields);
+      });
+      setTagInput('');
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setLinkData((prev) => {
+      if (!prev) return prev;
+      const updatedTags = prev.tags?.filter((tag) => tag !== tagToRemove) ?? [];
+      return { ...prev, tags: updatedTags };
+    });
+  };
+
+  const createNewLink = () => {
+    const correctedLinkData: CreateLinkFields = {
+      long_url: linkData?.long_url ?? '',
+      short_url: linkData?.short_url ?? '',
+      userId: user,
+      status: linkData?.status ?? 'active',
+      tags: linkData?.tags ?? [],
+      campaignId: linkData?.campaignId,
+    };
+    if (
+      correctedLinkData.long_url.trim().length === 0 ||
+      correctedLinkData.short_url.trim().length === 0 ||
+      correctedLinkData.userId === ''
+    ) {
+      addAlert('Please fill all the required fields', 'warning');
+    } else {
+      createLink({
+        addAlert: addAlert,
+        linkData: correctedLinkData,
+        setIsLoading: setIsLoading,
+        setLinkData: setLinkData,
+        navigate: navigate,
+      });
+    }
+  };
+
   return (
     <>
       {/* Header */}
@@ -24,58 +119,6 @@ const CreateLinkPage = () => {
                   Active
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="flex items-center rounded-lg border border-neutral-800 bg-neutral-900 px-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    data-lucide="globe"
-                    className="lucide lucide-globe w-4 h-4 text-neutral-500"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-                    <path d="M2 12h20"></path>
-                  </svg>
-                  <select
-                    id="domain"
-                    className="bg-transparent py-2.5 pl-2 pr-6 text-sm text-neutral-200 outline-none"
-                  >
-                    <option className="bg-neutral-900">ln.li</option>
-                    <option className="bg-neutral-900">go.lumen.link</option>
-                    <option className="bg-neutral-900">share.lumen.link</option>
-                  </select>
-                </div>
-                <button
-                  id="save-link"
-                  className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-neutral-100 text-black px-3.5 py-2 text-sm font-medium hover:bg-neutral-200"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    data-lucide="save"
-                    className="lucide lucide-save w-4 h-4"
-                  >
-                    <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
-                    <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path>
-                    <path d="M7 3v4a1 1 0 0 0 1 1h7"></path>
-                  </svg>
-                  Save link
-                </button>
-              </div>
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 sm:col-span-2">
@@ -97,9 +140,21 @@ const CreateLinkPage = () => {
                 </svg>
                 <input
                   id="destination"
+                  ref={mainShortURLCopy}
                   type="url"
                   placeholder="Destination URL (https://example.com/page)"
                   className="bg-transparent outline-none text-sm placeholder-neutral-500 text-neutral-200 w-full"
+                  value={linkData?.long_url ?? ''}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (!value) return;
+
+                    setLinkData((prev) =>
+                      prev
+                        ? { ...prev, long_url: value }
+                        : ({ long_url: value } as CreateLinkFields)
+                    );
+                  }}
                 />
               </div>
               <div className="flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2">
@@ -126,6 +181,17 @@ const CreateLinkPage = () => {
                   type="text"
                   placeholder="Custom slug (e.g. fall-launch)"
                   className="bg-transparent outline-none text-sm placeholder-neutral-500 text-neutral-200 w-full"
+                  value={linkData?.short_url ?? ''}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (!value) return;
+
+                    setLinkData((prev) =>
+                      prev
+                        ? { ...prev, short_url: value }
+                        : ({ short_url: value } as CreateLinkFields)
+                    );
+                  }}
                 />
               </div>
             </div>
@@ -160,6 +226,17 @@ const CreateLinkPage = () => {
                       <select
                         id="status"
                         className="bg-transparent py-2.5 pl-2 pr-6 text-sm text-neutral-200 outline-none w-full"
+                        value={linkData?.status}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (!value) return;
+
+                          setLinkData((prev) =>
+                            prev
+                              ? { ...prev, status: value as 'active' | 'inactive' }
+                              : ({ status: value as 'active' | 'inactive' } as CreateLinkFields)
+                          );
+                        }}
                       >
                         {linkStatus.map((linkStatus) => {
                           return (
@@ -233,7 +310,73 @@ const CreateLinkPage = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg border border-neutral-900 bg-neutral-950">
+                <div className="rounded-lg border border-neutral-900 bg-neutral-950 p-3">
+                  <label className="text-[11px] text-neutral-500">Tags (optional)</label>
+                  <div className="mt-1 flex items-center rounded-md border border-neutral-800 bg-neutral-900 px-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      data-lucide="tag"
+                      className="lucide lucide-tag w-4 h-4 text-neutral-500"
+                    >
+                      <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path>
+                      <circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle>
+                    </svg>
+                    <input
+                      id="tags"
+                      type="text"
+                      placeholder="Type a tag and press Enter"
+                      className="bg-transparent py-2.5 pl-2 pr-2 text-sm text-neutral-200 outline-none w-full"
+                      value={tagInput}
+                      onChange={(e) => setTagInput(e.target.value)}
+                      onKeyDown={handleAddTag}
+                    />
+                  </div>
+                  {linkData?.tags && linkData.tags.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {linkData.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-900 px-2.5 py-1 text-xs text-neutral-200"
+                        >
+                          {tag}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveTag(tag)}
+                            className="hover:text-neutral-400 transition-colors"
+                            aria-label={`Remove tag ${tag}`}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="14"
+                              height="14"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              data-lucide="x"
+                              className="lucide lucide-x"
+                            >
+                              <path d="M18 6 6 18"></path>
+                              <path d="M6 6l12 12"></path>
+                            </svg>
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* <div className="rounded-lg border border-neutral-900 bg-neutral-950">
                   <button
                     id="utm-toggle"
                     className="w-full flex items-center justify-between px-3 py-3"
@@ -405,7 +548,7 @@ const CreateLinkPage = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Right: Preview */}
@@ -415,12 +558,19 @@ const CreateLinkPage = () => {
                   <div className="mt-2 text-xs text-neutral-500">Your short link</div>
                   <div className="mt-2 flex items-center justify-between gap-2 rounded-md border border-neutral-800 bg-neutral-900 px-3 py-2">
                     <div className="truncate text-sm" id="preview-url">
-                      https://ln.li/launch
+                      {linkData?.short_url.trim().length
+                        ? `${siteBaseURL}/${linkData.short_url}`
+                        : 'No valid URL yet'}
                     </div>
                     <button
-                      className="inline-flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-950 px-2 py-1 text-xs hover:bg-neutral-800 copy-link"
+                      className="cursor-pointer inline-flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-950 px-2 py-1 text-xs hover:bg-neutral-800 copy-link"
                       id="copy-btn"
-                      data-clipboard="https://ln.li/launch"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (!mainShortURLCopy.current) return;
+                        copyOriginalURL(mainShortURLCopy.current);
+                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -524,6 +674,7 @@ const CreateLinkPage = () => {
               </span>
               <div className="flex items-center gap-2">
                 <button
+                  onClick={resetFormData}
                   id="reset-form"
                   className="cursor-pointer inline-flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm hover:bg-neutral-800"
                 >
@@ -547,6 +698,7 @@ const CreateLinkPage = () => {
                 </button>
                 <button
                   id="save-link-footer"
+                  onClick={createNewLink}
                   className="cursor-pointer inline-flex items-center gap-1.5 rounded-lg bg-neutral-100 text-black px-3 py-1.5 text-sm font-medium hover:bg-neutral-200"
                 >
                   <svg

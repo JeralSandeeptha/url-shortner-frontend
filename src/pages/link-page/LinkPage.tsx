@@ -1,10 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DashboardHeader from '../../components/dashboard-header/DashboardHeader';
 import { useEffect, useRef, useState } from 'react';
 import { getLink } from '../../api/link-services/get-link/getLink';
 import type { Link } from '../../types/interface.types';
 import { useAlert } from '../../hooks/useAlert';
 import { dateFormatter } from '../../utils/date';
+import { deleteLink } from '../../api/link-services/delete-link/deleteLink';
+import { useLoading } from '../../hooks/useLoading';
 
 const LinkPage = () => {
   const siteBaseURL = 'http://localhost:5173';
@@ -12,9 +14,24 @@ const LinkPage = () => {
   const [link, setLink] = useState<Link | undefined>(undefined);
 
   const { addAlert } = useAlert();
+  const { setIsLoading } = useLoading();
+  const navigate = useNavigate();
 
   const mainShortURLCopy = useRef<HTMLAnchorElement | null>(null);
   const longURLCopy = useRef<HTMLAnchorElement | null>(null);
+
+  const deleteLinkPermenant = () => {
+    const isDeleted = window.confirm('Are you sure want to delete this URL?');
+    if (!isDeleted) {
+      return;
+    }
+    deleteLink({
+      addAlert: addAlert,
+      linkId: link?._id ?? '',
+      setIsLoading: setIsLoading,
+      navigate: navigate,
+    });
+  };
 
   const copyOriginalURL = async (inputRef: HTMLAnchorElement) => {
     if (!inputRef.href) return;
@@ -347,6 +364,7 @@ const LinkPage = () => {
               </div>
             </div> */}
 
+            {/* Content Details Section */}
             <div className="rounded-2xl border border-neutral-900 bg-neutral-950 p-5 sm:p-6">
               <div className="text-base sm:text-lg font-semibold tracking-tight">Details</div>
               <div className="mt-4 space-y-4">
@@ -428,13 +446,24 @@ const LinkPage = () => {
                   <button
                     className="toggle inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-2 py-1.5"
                     role="switch"
-                    aria-checked="true"
-                    data-checked="true"
+                    aria-checked={link?.status === 'active'}
+                    data-checked={link?.status === 'active'}
                   >
-                    <span className="inline-flex h-5 w-9 items-center rounded-full bg-emerald-600/90">
-                      <span className="ml-auto mr-0.5 inline-block h-4 w-4 rounded-full bg-white"></span>
+                    <span
+                      className={`inline-flex h-5 w-9 items-center rounded-full transition-all
+      ${link?.status === 'active' ? 'bg-emerald-600/90' : 'bg-neutral-700'}
+    `}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 rounded-full bg-white transition-all
+        ${link?.status === 'active' ? 'ml-auto mr-0.5' : 'ml-0.5 mr-auto'}
+      `}
+                      ></span>
                     </span>
-                    <span className="text-xs text-neutral-300">Enabled</span>
+
+                    <span className="text-xs text-neutral-300">
+                      {link?.status === 'active' ? 'Enabled' : 'Disabled'}
+                    </span>
                   </button>
                 </div>
 
@@ -459,7 +488,7 @@ const LinkPage = () => {
                   <div>
                     <div className="text-xs text-neutral-500">Campaign</div>
                     <div className="mt-1 text-sm text-neutral-200">
-                      {link?.campaignId === undefined ? 'No Campaign' : link?.campaignId}
+                      {link?.campaignId?.trim().length === 0 ? 'No Campaign' : link?.campaignId}
                     </div>
                   </div>
                   <div>
@@ -479,6 +508,128 @@ const LinkPage = () => {
                     <div className="mt-1 text-sm text-neutral-200">2h ago</div>
                   </div> */}
                 </div>
+              </div>
+            </div>
+
+            {/* Update zone */}
+            <div className="rounded-2xl border border-neutral-900 bg-neutral-950 p-5 sm:p-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-semibold tracking-tight">Modify Zone</h3>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  data-lucide="pencil"
+                  className="lucide lucide-pencil w-4 h-4 text-blue-400"
+                >
+                  <path d="M17 3a2.828 2.828 0 0 1 4 4L7 21l-5 1 1-5Z" />
+                  <path d="m15 5 4 4" />
+                </svg>
+              </div>
+
+              <p className="mt-2 text-sm text-neutral-400">Save changes made to this link.</p>
+
+              <p className="mt-2 text-sm text-neutral-400">
+                You can't change short name of your link.
+              </p>
+
+              <div className="mt-4 flex items-center justify-between rounded-xl border border-neutral-900 bg-neutral-950 p-4">
+                <div className="text-sm">
+                  <div className="text-neutral-300">Update Link</div>
+                  <div className="text-xs text-neutral-500">Your changes will be applied</div>
+                </div>
+
+                <button
+                  id="update-link"
+                  onClick={() => {}}
+                  className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-blue-500/10 text-blue-400 px-3 py-1.5 text-sm border border-blue-500/30 hover:bg-blue-500/20"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    data-lucide="save"
+                    className="lucide lucide-save w-4 h-4"
+                  >
+                    <path d="M20 21V7.828a2 2 0 0 0-.586-1.414l-2.828-2.828A2 2 0 0 0 15.172 3H4a2 2 0 0 0-2 2v16" />
+                    <path d="M12 17v4" />
+                    <path d="M7 17v4" />
+                    <rect x="7" y="3" width="10" height="6" rx="2" />
+                  </svg>
+                  Update
+                </button>
+              </div>
+            </div>
+
+            {/* Delete Link  */}
+            <div className="rounded-2xl border border-neutral-900 bg-neutral-950 p-5 sm:p-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-semibold tracking-tight">Danger Zone</h3>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  data-lucide="alert-triangle"
+                  className="lucide lucide-alert-triangle w-4 h-4 text-red-400"
+                >
+                  <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
+                  <path d="M12 9v4"></path>
+                  <path d="M12 17h.01"></path>
+                </svg>
+              </div>
+              <p className="mt-2 text-sm text-neutral-400">
+                Permanently delete this link and all associated data.
+              </p>
+              <div className="mt-4 flex items-center justify-between rounded-xl border border-neutral-900 bg-neutral-950 p-4">
+                <div className="text-sm">
+                  <div className="text-neutral-300">Delete Link</div>
+                  <div className="text-xs text-neutral-500">This action cannot be undone</div>
+                </div>
+                <button
+                  id="delete-account"
+                  onClick={deleteLinkPermenant}
+                  className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-red-500/10 text-red-400 px-3 py-1.5 text-sm border border-red-500/30 hover:bg-red-500/20"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    data-lucide="trash-2"
+                    className="lucide lucide-trash-2 w-4 h-4"
+                  >
+                    <path d="M10 11v6"></path>
+                    <path d="M14 11v6"></path>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                    <path d="M3 6h18"></path>
+                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>{' '}
+                  Delete
+                </button>
               </div>
             </div>
           </div>

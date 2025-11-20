@@ -4,6 +4,7 @@ import type { Link as LinkProps } from '../../types/interface.types';
 import LinkRow from '../../components/link-row/LinkRow';
 import { getUserLinks } from '../../api/link-services/get-user-links/getUserLinks';
 import { useUser } from '../../hooks/useUser';
+import { Link } from 'react-router-dom';
 
 const LinksPage = () => {
   const [links, setLinks] = useState<LinkProps[]>([]);
@@ -36,8 +37,9 @@ const LinksPage = () => {
                 {/* Header Actions */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
                   <div className="flex items-center gap-2">
-                    <button
+                    <Link
                       id="new-link"
+                      to="/dashboard/links/create-link"
                       className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-neutral-100 text-black px-3.5 py-2 text-sm font-medium hover:bg-neutral-200"
                     >
                       <svg
@@ -57,7 +59,7 @@ const LinksPage = () => {
                         <path d="M12 5v14"></path>
                       </svg>
                       New link
-                    </button>
+                    </Link>
                   </div>
 
                   {/* Filters */}

@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 import type { NavigateFunction } from 'react-router-dom';
 import type { AlertType } from './context.types';
-import type { Link, UserDetails } from './interface.types';
+import type { CreateLinkFields, Link, UserDetails } from './interface.types';
 
 export type registerUserProps = {
   userDetails: {
@@ -53,6 +53,13 @@ export type redirectProps = {
 export type getLinkProps = {
   linkId: string;
   setLink: Dispatch<SetStateAction<Link | undefined>>;
+};
+
+export type deleteLinkProps = {
+  linkId: string;
+  addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  navigate: NavigateFunction;
 };
 
 export type checkSessionProps = {
@@ -110,4 +117,12 @@ export type deleteUserProps = {
 export type getUserLinksProps = {
   userId: string;
   setLinks: Dispatch<SetStateAction<Link[]>>;
+};
+
+export type createLinkProps = {
+  linkData: CreateLinkFields;
+  addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  navigate?: NavigateFunction;
+  setLinkData: Dispatch<SetStateAction<CreateLinkFields | undefined>>;
 };

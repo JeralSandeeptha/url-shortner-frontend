@@ -5,7 +5,7 @@ import axiosClient from '../../../config/axiosClient';
 
 const baseURL = config.VITE_API_URL;
 
-export const getLink = async (props: getLinkProps) => {
+export const updateLink = async (props: getLinkProps) => {
   try {
     const res = await axiosClient.get(`${baseURL}/gateway/urls/api/v1/url/${props.linkId}`);
     props.setLink(res.data.data);
