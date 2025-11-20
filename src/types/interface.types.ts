@@ -19,3 +19,16 @@ export type UserDetails = {
   emailVerified: boolean;
   enabled: boolean;
 };
+
+export type Link = {
+  _id: string;
+  long_url: string;
+  short_url: string;
+  userId: string;
+  clicks: number;
+  campaignId?: string;
+  tags: string[];
+  status: 'active' | 'inactive';
+  createdAt: string;
+  updatedAt: string;
+};

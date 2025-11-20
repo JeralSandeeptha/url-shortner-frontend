@@ -59,7 +59,7 @@ const RegisterPage = () => {
   return (
     <div
       className="min-h-screen flex flex-col lg:flex-row bg-black"
-      style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" }}
+      // style={{ fontFamily: "'Roboto', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       {isLoading && <LoadingComponent />}
       {/* Left column: sign‑in form  */}

@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 import type { NavigateFunction } from 'react-router-dom';
 import type { AlertType } from './context.types';
-import type { UserDetails } from './interface.types';
+import type { Link, UserDetails } from './interface.types';
 
 export type registerUserProps = {
   userDetails: {
@@ -38,8 +38,29 @@ export type logoutUserProps = {
   clearLocalStorageItem: (itemName: string) => void;
 };
 
+export type logoutWithoutNotifyProps = {
+  navigate: NavigateFunction;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setAuthenticated: Dispatch<SetStateAction<boolean>>;
+  clearLocalStorageItem: (itemName: string) => void;
+};
+
+export type redirectProps = {
+  shortId: string;
+  navigate: NavigateFunction;
+};
+
+export type getLinkProps = {
+  linkId: string;
+  setLink: Dispatch<SetStateAction<Link | undefined>>;
+};
+
 export type checkSessionProps = {
   setAuthenticated: Dispatch<SetStateAction<boolean>>;
+  navigate: NavigateFunction;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  clearLocalStorageItem: (itemName: string) => void;
+  addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
 };
 
 export type getSingleUserProps = {
@@ -84,4 +105,9 @@ export type deleteUserProps = {
   setAuthenticated: Dispatch<SetStateAction<boolean>>;
   navigate: NavigateFunction;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+};
+
+export type getUserLinksProps = {
+  userId: string;
+  setLinks: Dispatch<SetStateAction<Link[]>>;
 };

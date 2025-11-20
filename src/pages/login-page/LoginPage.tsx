@@ -61,10 +61,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div
-      className="min-h-screen flex flex-col lg:flex-row bg-black"
-      style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" }}
-    >
+    <div className="min-h-screen flex flex-col lg:flex-row bg-black">
       {isLoading && <LoadingComponent />}
       {/* Left column: sign‑in form  */}
       <section className="flex-1 flex pt-8 pr-8 pb-8 pl-8 items-center justify-center">

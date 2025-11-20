@@ -1,7 +1,7 @@
 import DashboardHeader from '../../components/dashboard-header/DashboardHeader';
 import { linkStatus } from '../../constants/link-status';
 
-const CustomLinkPage = () => {
+const CreateLinkPage = () => {
   return (
     <>
       {/* Header */}
@@ -577,4 +577,4 @@ const CustomLinkPage = () => {
   );
 };
 
-export default CustomLinkPage;
+export default CreateLinkPage;

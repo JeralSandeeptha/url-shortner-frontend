@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import HomePage from '../pages/home-page/HomePage';
 import LoginPage from '../pages/login-page/LoginPage';
 import RegisterPage from '../pages/register-page/RegisterPage';
@@ -15,11 +15,17 @@ import CustomLinkPage from '../pages/custom-link-page/CustomLinkPage';
 import SettingsPage from '../pages/settings-page/SettingsPage';
 import ProtectedRoute from '../components/protected-route/ProtectedRoute';
 import PublicRoute from '../components/public-route/PublicRoute';
+import LinkRedirectorPage from '../pages/redirection-page/LinkRedirectorPage';
+import LinkPage from '../pages/link-page/LinkPage';
+import CreateLinkPage from '../pages/create-link-page/CreateLinkPage';
+import ForbiddenPage from '../pages/forbidden-page/ForbiddenPage';
 
 const MainRouter = () => {
   return (
-    <BrowserRouter>
+    <>
       <Routes>
+        <Route path="/:shortId" element={<LinkRedirectorPage />} />
+        <Route path="/url/forbidden" element={<ForbiddenPage />} />
         <Route
           path="/"
           element={
@@ -78,6 +84,8 @@ const MainRouter = () => {
         >
           <Route path="" element={<OverviewPage />} />
           <Route path="links" element={<LinksPage />} />
+          <Route path="links/create-link" element={<CreateLinkPage />} />
+          <Route path="links/:linkId" element={<LinkPage />} />
           <Route path="microsite" element={<MicrositePage />} />
           <Route path="campaigns" element={<CampaignsPage />} />
           <Route path="custom-link" element={<CustomLinkPage />} />
@@ -85,7 +93,7 @@ const MainRouter = () => {
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 };
 
