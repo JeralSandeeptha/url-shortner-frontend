@@ -49,10 +49,7 @@ export const createLink = async (props: createLinkProps) => {
     if (isAxiosError(error)) {
       switch (error.response?.status) {
         case 400:
-          props.addAlert(
-            error.response?.data?.message || 'Invalid link data. Please check your input.',
-            'error'
-          );
+          props.addAlert('Already exist the short URL.', 'error');
           break;
         case 401:
           props.addAlert('Unauthorized. Please log in again.', 'error');
