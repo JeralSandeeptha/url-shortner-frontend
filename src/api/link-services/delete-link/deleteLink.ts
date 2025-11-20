@@ -11,11 +11,14 @@ export const deleteLink = async (props: deleteLinkProps) => {
     const res = await axiosClient.delete(`${baseURL}/gateway/urls/api/v1/url/${props.linkId}`);
     logger.info(res.data);
     props.setIsLoading(false);
-    props.navigate('/dashboard/links');
+    if (!props.skipNavigation) {
+      props.navigate('/dashboard/links');
+    }
     props.addAlert('Your URL has been deleted', 'success');
   } catch (error) {
     logger.error(error);
     props.setIsLoading(false);
     props.addAlert('Something went wrong!', 'error');
+    throw error; // Re-throw to allow caller to handle
   }
 };

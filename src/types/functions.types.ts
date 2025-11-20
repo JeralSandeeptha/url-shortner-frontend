@@ -60,6 +60,7 @@ export type deleteLinkProps = {
   addAlert: (message: string, type?: AlertType | undefined, timeout?: number | undefined) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   navigate: NavigateFunction;
+  skipNavigation?: boolean;
 };
 
 export type checkSessionProps = {

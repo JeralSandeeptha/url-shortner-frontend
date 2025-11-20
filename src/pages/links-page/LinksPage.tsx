@@ -14,7 +14,6 @@ const LinksPage = () => {
   const { user } = useUser();
 
   const getLinks = () => {
-    console.log('Fetching user links...');
     getUserLinks({
       userId: user,
       setLinks: setLinks,
@@ -217,7 +216,9 @@ const LinksPage = () => {
                     <tbody className="divide-y divide-neutral-900 w-full">
                       {/* Row Example */}
                       {filteredLinks.length > 0 ? (
-                        filteredLinks.map((item) => <LinkRow key={item._id} {...item} />)
+                        filteredLinks.map((item) => (
+                          <LinkRow key={item._id} {...item} onDelete={getLinks} />
+                        ))
                       ) : (
                         <tr className="flex items-center justify-center w-full">
                           <td className="py-8 text-center text-neutral-500 w-full">
