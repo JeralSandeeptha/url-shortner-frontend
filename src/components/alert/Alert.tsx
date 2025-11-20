@@ -3,10 +3,10 @@ import clsx from 'clsx';
 
 const AlertComponent = (props: AlertProps) => {
   const typeClasses = {
-    success: 'bg-green-100 text-green-800 border-green-200 [&>svg]:text-green-500',
-    error: 'bg-red-100 text-red-800 border-red-200 [&>svg]:text-red-500',
-    info: 'bg-blue-100 text-blue-800 border-blue-200 [&>svg]:text-blue-500',
-    warning: 'bg-yellow-100 text-yellow-800 border-yellow-200 [&>svg]:text-yellow-500',
+    success: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 [&>svg]:text-emerald-400',
+    error: 'bg-red-500/10 text-red-400 border-red-500/30 [&>svg]:text-red-400',
+    info: 'bg-blue-500/10 text-blue-400 border-blue-500/30 [&>svg]:text-blue-400',
+    warning: 'bg-amber-500/10 text-amber-400 border-amber-500/30 [&>svg]:text-amber-400',
   };
 
   return (
@@ -14,7 +14,7 @@ const AlertComponent = (props: AlertProps) => {
       data-slot="alert"
       role="alert"
       className={clsx(
-        'max-w-[300px] w-[300px] max-sm:w-full relative rounded-lg border px-4 py-3 text-sm grid flex-col gap-3',
+        'max-w-[300px] w-[300px] max-sm:w-full relative rounded-lg border px-4 py-3 text-sm grid flex-col gap-3 bg-neutral-950',
         typeClasses[props.type]
       )}
     >
@@ -73,7 +73,7 @@ const AlertComponent = (props: AlertProps) => {
         {props.message && (
           <div
             data-slot="alert-description"
-            className="text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed"
+            className="col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed opacity-90"
           >
             {props.message}
           </div>
