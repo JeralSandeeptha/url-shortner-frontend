@@ -50,11 +50,11 @@ const LinksPage = () => {
       <DashboardHeader title="Links" />
 
       {/* Content */}
-      <section className="sm:px-6 max-w-7xl mr-auto ml-auto pt-8 pr-4 pb-8 pl-4">
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <div className="xl:col-span-3">
-            <div className="rounded-2xl border border-neutral-900 bg-neutral-950 p-5 sm:p-6">
-              <div className="flex flex-col gap-4">
+      <section className="sm:px-6 max-w-7xl mr-auto ml-auto pt-8 pr-4 pb-8 pl-4 flex flex-col min-h-[calc(100vh-64px-64px)]">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 flex-1">
+          <div className="xl:col-span-3 flex flex-col">
+            <div className="rounded-2xl border border-neutral-900 bg-neutral-950 p-5 sm:p-6 flex flex-col flex-1">
+              <div className="flex flex-col gap-4 flex-1">
                 {/* Header Actions */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
                   <div className="flex items-center gap-2">
@@ -196,8 +196,8 @@ const LinksPage = () => {
                 <div className="h-px bg-neutral-900"></div>
 
                 {/* Table */}
-                <div className="overflow-x-auto">
-                  <table className="min-w-full text-sm text-neutral-300 overflow-scroll">
+                <div className="overflow-x-auto flex-1 min-h-0">
+                  <table className="min-w-full text-sm text-neutral-300">
                     <thead>
                       <tr className="text-left text-neutral-500 border-b border-neutral-900 flex items-center justify-between">
                         <div className="grid grid-cols-5 w-full items-center">
