@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 
 const LinksPage = () => {
   const [links, setLinks] = useState<LinkProps[]>([]);
+  const [filteredLinks, setFilteredLinks] = useState<LinkProps[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const { user } = useUser();
 
@@ -22,6 +24,26 @@ const LinksPage = () => {
   useEffect(() => {
     getLinks();
   }, []);
+
+  // Filter links based on search query
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setFilteredLinks(links);
+    } else {
+      const query = searchQuery.toLowerCase();
+      const filtered = links.filter((link) => {
+        const matchesShortUrl = link.short_url.toLowerCase().includes(query);
+        const matchesLongUrl = link.long_url.toLowerCase().includes(query);
+        const matchesTags = link.tags?.some((tag) => tag.toLowerCase().includes(query)) || false;
+        return matchesShortUrl || matchesLongUrl || matchesTags;
+      });
+      setFilteredLinks(filtered);
+    }
+  }, [searchQuery, links]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   return (
     <>
@@ -64,7 +86,7 @@ const LinksPage = () => {
 
                   {/* Filters */}
                   <div className="flex items-center gap-2">
-                    {/* Domain Filter */}
+                    {/* Search Filter */}
                     <div className="hidden sm:flex items-center rounded-lg border border-neutral-800 bg-neutral-900 px-3">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -76,17 +98,19 @@ const LinksPage = () => {
                         strokeWidth="1.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        data-lucide="link"
-                        className="lucide lucide-link w-4 h-4 text-neutral-500"
+                        data-lucide="search"
+                        className="lucide lucide-search w-4 h-4 text-neutral-500"
                       >
-                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        <path d="m21 21-4.34-4.34"></path>
+                        <circle cx="11" cy="11" r="8"></circle>
                       </svg>
-                      <select className="bg-transparent py-2.5 pl-2 pr-6 text-sm text-neutral-200 outline-none">
-                        <option className="bg-neutral-900">lumen.link</option>
-                        <option className="bg-neutral-900">short.link</option>
-                        <option className="bg-neutral-900">go.acme.com</option>
-                      </select>
+                      <input
+                        type="text"
+                        placeholder="Search links..."
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        className="bg-transparent py-2.5 pl-2 pr-6 text-sm text-neutral-200 outline-none w-48"
+                      />
                     </div>
 
                     {/* Tag Filter */}
@@ -192,9 +216,17 @@ const LinksPage = () => {
 
                     <tbody className="divide-y divide-neutral-900 w-full">
                       {/* Row Example */}
-                      {links.map((item) => (
-                        <LinkRow key={item._id} {...item} />
-                      ))}
+                      {filteredLinks.length > 0 ? (
+                        filteredLinks.map((item) => <LinkRow key={item._id} {...item} />)
+                      ) : (
+                        <tr className="flex items-center justify-center w-full">
+                          <td className="py-8 text-center text-neutral-500 w-full">
+                            {searchQuery
+                              ? 'No links found matching your search.'
+                              : 'No links found.'}
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
