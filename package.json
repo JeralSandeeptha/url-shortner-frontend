@@ -12,7 +12,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --write .",
     "prepare": "husky install",
-    "test": "vitest run --exclude tests/**",
+    "test": "vitest run --exclude \"tests/**\" --exclude \"**/*.spec.ts\"",
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test"
