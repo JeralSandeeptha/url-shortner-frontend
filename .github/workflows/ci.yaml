@@ -79,7 +79,7 @@ jobs:
       # Build Docker Image
       - name: Build Docker Image
         run: |
-          docker build -t jeralsandeeptha/${{ steps.set-repo.outputs.repo_name }}:${{ github.sha }}
+          docker build -t jeralsandeeptha/${{ steps.set-repo.outputs.repo_name }}:${{ github.sha }} .
 
       # Push Docker Image
       - name: Push Docker Image
