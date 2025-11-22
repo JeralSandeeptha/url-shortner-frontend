@@ -45,7 +45,7 @@ jobs:
       # Install Dependencies
       - name: Install dependencies
         run: npm ci
-        
+
       # Unit Testing
       - name: Run unit tests
         run: npm run test
