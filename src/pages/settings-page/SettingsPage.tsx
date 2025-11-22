@@ -1,10 +1,127 @@
+import { useEffect, useState } from 'react';
 import DashboardHeader from '../../components/dashboard-header/DashboardHeader';
+import { timezones } from '../../constants/timezones';
+import { useUser } from '../../hooks/useUser';
+import { deleteUser } from '../../api/user-services/delete-user/deleteUser';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { useAlert } from '../../hooks/useAlert';
+import { useNavigate } from 'react-router-dom';
+import { useLoading } from '../../hooks/useLoading';
+import { useAuth } from '../../hooks/useAuth';
+import type { UserDetails } from '../../types/interface.types';
+import { getSingleUser } from '../../api/user-services/get-user/getSingleUser';
+import { extractUsername } from '../../utils/extracters';
+import { updateUerPreferences } from '../../api/user-services/update-user-preferences/updateUserPreferences';
+import LoadingComponent from '../../components/loading-component/LoadingComponent';
+import { updateUserSecurity } from '../../api/user-services/update-security/updateSecurity';
+import { updateUserProfile } from '../../api/user-services/update-profile/updateUserProfile';
+import { resetPassword } from '../../api/user-services/reset-password/resetPassword';
 
 const SettingsPage = () => {
+  const [userDetails, setUserDetails] = useState<UserDetails | undefined>(undefined);
+
+  const [currentPassword, setCurrentPassword] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+
+  const { clearLocalStorageItem } = useLocalStorage();
+  const { user } = useUser();
+  const { addAlert } = useAlert();
+  const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useLoading();
+  const { setAuthenticated } = useAuth();
+
+  const deleteAccount = () => {
+    const shouldDelete = window.confirm('Are you sure want to delete your account?');
+
+    if (!shouldDelete) {
+      return;
+    }
+
+    deleteUser({
+      userId: user,
+      clearLocalStorageItem: clearLocalStorageItem,
+      addAlert: addAlert,
+      navigate: navigate,
+      setIsLoading: setIsLoading,
+      setAuthenticated: setAuthenticated,
+    });
+  };
+
+  const updatePassword = () => {
+    if (
+      newPassword.trim().length === 0 ||
+      confirmPassword.trim().length === 0 ||
+      currentPassword.trim().length === 0
+    ) {
+      addAlert('Please fill all the fields', 'error');
+    } else {
+      if (newPassword === confirmPassword) {
+        if (newPassword.trim().length >= 6) {
+          resetPassword({
+            userId: user,
+            email: userDetails?.email ?? '',
+            currentPassword: currentPassword,
+            newPassword: newPassword,
+            setIsLoading: setIsLoading,
+            addAlert: addAlert,
+          });
+        } else {
+          addAlert('Password must be at least 6 characters long', 'error');
+        }
+      } else {
+        addAlert('New password and Confirm password are not match', 'error');
+      }
+    }
+  };
+
+  const updateSecurity = () => {
+    updateUserSecurity({
+      addAlert: addAlert,
+      setIsLoading: setIsLoading,
+      user: userDetails,
+      userId: user,
+    });
+    getUserData();
+  };
+
+  const updatePreferences = () => {
+    updateUerPreferences({
+      addAlert: addAlert,
+      setIsLoading: setIsLoading,
+      user: userDetails,
+      userId: user,
+    });
+    getUserData();
+  };
+
+  const updateProfile = () => {
+    updateUserProfile({
+      addAlert: addAlert,
+      setIsLoading: setIsLoading,
+      user: userDetails,
+      userId: user,
+    });
+    getUserData();
+  };
+
+  const getUserData = () => {
+    getSingleUser({
+      setUserDetails: setUserDetails,
+      userId: user,
+    });
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
     <>
       {/* Header */}
       <DashboardHeader title="Settings" />
+
+      {isLoading && <LoadingComponent />}
 
       {/* Content */}
       <section className="sm:px-6 max-w-7xl mr-auto ml-auto pt-8 pr-4 pb-8 pl-4">
@@ -47,13 +164,18 @@ const SettingsPage = () => {
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="sm:col-span-3 flex items-center gap-4 rounded-xl border border-neutral-900 bg-neutral-950 p-4">
                     <img
-                      src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&amp;w=256&amp;auto=format&amp;fit=crop"
+                      src={
+                        userDetails?.image ??
+                        'https://images.unsplash.com/photo-1728577740843-5f29c7586afe?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                      }
                       alt="avatar"
-                      className="w-12 h-12 rounded-full border border-neutral-800"
+                      className="cursor-pointer w-12 h-12 rounded-full border border-neutral-800"
                     />
                     <div className="text-sm">
-                      <div className="text-neutral-300">Profile photo</div>
-                      <div className="text-xs text-neutral-500">Recommended: 256x256px</div>
+                      <div className="text-neutral-300">
+                        {extractUsername(userDetails?.username ?? '')}
+                      </div>
+                      <div className="text-xs text-neutral-500">{userDetails?.email}</div>
                     </div>
                     <button className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-xs hover:bg-neutral-800">
                       <svg
@@ -81,6 +203,17 @@ const SettingsPage = () => {
                     <label className="text-xs text-neutral-400">First name</label>
                     <input
                       type="text"
+                      value={userDetails?.firstName ?? ''}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (!value) return;
+
+                        setUserDetails((prev) =>
+                          prev
+                            ? { ...prev, firstName: value }
+                            : ({ firstName: value } as UserDetails)
+                        );
+                      }}
                       placeholder="Jane"
                       className="mt-1 w-full rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-2.5 text-sm text-neutral-200 placeholder-neutral-500 outline-none"
                     />
@@ -90,14 +223,15 @@ const SettingsPage = () => {
                     <input
                       type="text"
                       placeholder="Doe"
-                      className="mt-1 w-full rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-2.5 text-sm text-neutral-200 placeholder-neutral-500 outline-none"
-                    />
-                  </div>
-                  <div className="sm:col-span-1">
-                    <label className="text-xs text-neutral-400">Email</label>
-                    <input
-                      type="email"
-                      placeholder="jane@company.com"
+                      value={userDetails?.lastName ?? ''}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (!value) return;
+
+                        setUserDetails((prev) =>
+                          prev ? { ...prev, lastName: value } : ({ lastName: value } as UserDetails)
+                        );
+                      }}
                       className="mt-1 w-full rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-2.5 text-sm text-neutral-200 placeholder-neutral-500 outline-none"
                     />
                   </div>
@@ -123,19 +257,31 @@ const SettingsPage = () => {
                         <path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"></path>
                         <circle cx="12" cy="12" r="10"></circle>
                       </svg>
-                      <select className="w-full bg-transparent py-2.5 pl-2 text-sm text-neutral-200 outline-none">
-                        <option className="bg-neutral-900" value="UTC">
-                          UTC
-                        </option>
-                        <option className="bg-neutral-900" value="PST">
-                          Pacific Time (PT)
-                        </option>
-                        <option className="bg-neutral-900" value="EST">
-                          Eastern Time (ET)
-                        </option>
-                        <option className="bg-neutral-900" value="CET">
-                          Central European Time (CET)
-                        </option>
+                      <select
+                        value={userDetails?.timeZone}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (!value) return;
+
+                          setUserDetails((prev) =>
+                            prev
+                              ? { ...prev, timeZone: value }
+                              : ({ timeZone: value } as UserDetails)
+                          );
+                        }}
+                        className="w-full bg-transparent py-2.5 pl-2 text-sm text-neutral-200 outline-none"
+                      >
+                        {timezones.map((timezone) => {
+                          return (
+                            <option
+                              className="bg-neutral-900"
+                              value={timezone.value}
+                              key={timezone.value}
+                            >
+                              {timezone.label}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>
@@ -144,13 +290,27 @@ const SettingsPage = () => {
                     <textarea
                       rows={3}
                       placeholder="A short bio..."
+                      value={userDetails?.biography ?? ''}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (!value) return;
+
+                        setUserDetails((prev) =>
+                          prev
+                            ? { ...prev, biography: value }
+                            : ({ biography: value } as UserDetails)
+                        );
+                      }}
                       className="mt-1 w-full rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-2.5 text-sm text-neutral-200 placeholder-neutral-500 outline-none"
                     ></textarea>
                   </div>
                 </div>
 
                 <div className="mt-6 flex items-center justify-end">
-                  <button className="settings-save inline-flex items-center gap-2 rounded-lg bg-neutral-100 text-black px-4 py-2.5 text-sm font-medium hover:bg-neutral-200">
+                  <button
+                    onClick={updateProfile}
+                    className="cursor-pointer settings-save inline-flex items-center gap-2 rounded-lg bg-neutral-100 text-black px-4 py-2.5 text-sm font-medium hover:bg-neutral-200"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -178,6 +338,64 @@ const SettingsPage = () => {
             <div className="rounded-2xl border border-neutral-900 bg-neutral-950">
               <div className="p-5 sm:p-6">
                 <h3 className="text-xl font-semibold tracking-tight">Security</h3>
+                <p className="text-sm text-neutral-400 mt-1">Secure your account</p>
+
+                <div className="mt-5 flex items-center justify-between rounded-xl border border-neutral-900 bg-neutral-950 p-4">
+                  <div className="text-sm">
+                    <div className="text-neutral-300">Two-factor authentication</div>
+                    <div className="text-xs text-neutral-500">
+                      Add an extra layer of security to your account
+                    </div>
+                  </div>
+                  {/* Toggle  */}
+                  <button
+                    type="button"
+                    className="toggle group relative inline-flex h-6 w-10 items-center rounded-full border border-neutral-800 bg-neutral-900 transition-colors data-[checked=true]:bg-emerald-500/90"
+                    role="switch"
+                    aria-checked={userDetails?.twoFactorAuth ? 'true' : 'false'}
+                    data-checked={userDetails?.twoFactorAuth}
+                    onClick={() => {
+                      if (!userDetails) return;
+
+                      setUserDetails((prev) =>
+                        prev ? { ...prev, twoFactorAuth: !prev.twoFactorAuth } : prev
+                      );
+                    }}
+                  >
+                    <span className="absolute left-0.5 h-5 w-5 rounded-full bg-neutral-300 transition-all group-data-[checked=true]:translate-x-4 group-data-[checked=true]:bg-white"></span>
+                  </button>
+                </div>
+
+                <div className="mt-5 flex items-center justify-end">
+                  <button
+                    onClick={updateSecurity}
+                    className="cursor-pointer settings-save inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-sm hover:bg-neutral-800"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      data-lucide="shield-check"
+                      className="lucide lucide-shield-check w-4 h-4"
+                    >
+                      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+                      <path d="m9 12 2 2 4-4"></path>
+                    </svg>{' '}
+                    Update security
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* Change Password Section */}
+            <div className="rounded-2xl border border-neutral-900 bg-neutral-950">
+              <div className="p-5 sm:p-6">
+                <h3 className="text-xl font-semibold tracking-tight">Change Password</h3>
                 <p className="text-sm text-neutral-400 mt-1">
                   Update your password and secure your account
                 </p>
@@ -204,6 +422,8 @@ const SettingsPage = () => {
                       </svg>
                       <input
                         type="password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
                         placeholder="••••••••"
                         className="w-full bg-transparent py-2.5 pl-2 text-sm text-neutral-200 outline-none"
                       />
@@ -230,6 +450,8 @@ const SettingsPage = () => {
                       </svg>
                       <input
                         type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
                         placeholder="••••••••"
                         className="w-full bg-transparent py-2.5 pl-2 text-sm text-neutral-200 outline-none"
                       />
@@ -256,6 +478,8 @@ const SettingsPage = () => {
                       </svg>
                       <input
                         type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="••••••••"
                         className="w-full bg-transparent py-2.5 pl-2 text-sm text-neutral-200 outline-none"
                       />
@@ -263,27 +487,11 @@ const SettingsPage = () => {
                   </div>
                 </div>
 
-                <div className="mt-5 flex items-center justify-between rounded-xl border border-neutral-900 bg-neutral-950 p-4">
-                  <div className="text-sm">
-                    <div className="text-neutral-300">Two-factor authentication</div>
-                    <div className="text-xs text-neutral-500">
-                      Add an extra layer of security to your account
-                    </div>
-                  </div>
-                  {/* Toggle  */}
-                  <button
-                    type="button"
-                    className="toggle group relative inline-flex h-6 w-10 items-center rounded-full border border-neutral-800 bg-neutral-900 transition-colors data-[checked=true]:bg-emerald-500/90"
-                    role="switch"
-                    aria-checked="false"
-                    data-checked="false"
-                  >
-                    <span className="absolute left-0.5 h-5 w-5 rounded-full bg-neutral-300 transition-all group-data-[checked=true]:translate-x-4 group-data-[checked=true]:bg-white"></span>
-                  </button>
-                </div>
-
                 <div className="mt-5 flex items-center justify-end">
-                  <button className="settings-save inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-sm hover:bg-neutral-800">
+                  <button
+                    onClick={updatePassword}
+                    className="cursor-pointer settings-save inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-sm hover:bg-neutral-800"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -300,7 +508,7 @@ const SettingsPage = () => {
                       <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
                       <path d="m9 12 2 2 4-4"></path>
                     </svg>{' '}
-                    Update security
+                    Update Password
                   </button>
                 </div>
               </div>
@@ -309,87 +517,6 @@ const SettingsPage = () => {
 
           {/* Right column  */}
           <div className="space-y-6">
-            {/* Workspace  */}
-            <div className="rounded-2xl border border-neutral-900 bg-neutral-950 p-5 sm:p-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-semibold tracking-tight">Workspace</h3>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  data-lucide="briefcase"
-                  className="lucide lucide-briefcase w-4 h-4 text-neutral-500"
-                >
-                  <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                  <rect width="20" height="14" x="2" y="6" rx="2"></rect>
-                </svg>
-              </div>
-              <div className="mt-4 space-y-4">
-                <div>
-                  <label className="text-xs text-neutral-400">Workspace name</label>
-                  <input
-                    type="text"
-                    placeholder="Acme Inc."
-                    className="mt-1 w-full rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-2.5 text-sm text-neutral-200 placeholder-neutral-500 outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs text-neutral-400">Default domain</label>
-                  <div className="mt-1 flex items-center rounded-lg border border-neutral-800 bg-neutral-900 px-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      data-lucide="link"
-                      className="lucide lucide-link w-4 h-4 text-neutral-500"
-                    >
-                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                    </svg>
-                    <select className="w-full bg-transparent py-2.5 pl-2 text-sm text-neutral-200 outline-none">
-                      <option className="bg-neutral-900">lumen.link</option>
-                      <option className="bg-neutral-900">short.link</option>
-                      <option className="bg-neutral-900">go.acme.com</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-5 flex items-center justify-end">
-                <button className="settings-save inline-flex items-center gap-2 rounded-lg bg-neutral-100 text-black px-4 py-2.5 text-sm font-medium hover:bg-neutral-200">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    data-lucide="save"
-                    className="lucide lucide-save w-4 h-4"
-                  >
-                    <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
-                    <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path>
-                    <path d="M7 3v4a1 1 0 0 0 1 1h7"></path>
-                  </svg>{' '}
-                  Save workspace
-                </button>
-              </div>
-            </div>
-
             {/* Notifications */}
             <div className="rounded-2xl border border-neutral-900 bg-neutral-950 p-5 sm:p-6">
               <div className="flex items-center justify-between">
@@ -423,10 +550,17 @@ const SettingsPage = () => {
                   </div>
                   <button
                     type="button"
-                    className="toggle group relative inline-flex h-6 w-10 items-center rounded-full border border-neutral-800 bg-neutral-900 transition-colors data-[checked=true]:bg-emerald-500/90"
+                    className="cursor-pointer toggle group relative inline-flex h-6 w-10 items-center rounded-full border border-neutral-800 bg-neutral-900 transition-colors data-[checked=true]:bg-emerald-500/90"
                     role="switch"
-                    aria-checked="true"
-                    data-checked="true"
+                    aria-checked={userDetails?.productUpdates ? 'true' : 'false'}
+                    data-checked={userDetails?.productUpdates}
+                    onClick={() => {
+                      if (!userDetails) return;
+
+                      setUserDetails((prev) =>
+                        prev ? { ...prev, productUpdates: !prev.productUpdates } : prev
+                      );
+                    }}
                   >
                     <span className="absolute left-0.5 h-5 w-5 rounded-full bg-neutral-300 transition-all group-data-[checked=true]:translate-x-4 group-data-[checked=true]:bg-white"></span>
                   </button>
@@ -440,10 +574,17 @@ const SettingsPage = () => {
                   </div>
                   <button
                     type="button"
-                    className="toggle group relative inline-flex h-6 w-10 items-center rounded-full border border-neutral-800 bg-neutral-900 transition-colors data-[checked=true]:bg-emerald-500/90"
+                    className="cursor-pointer toggle group relative inline-flex h-6 w-10 items-center rounded-full border border-neutral-800 bg-neutral-900 transition-colors data-[checked=true]:bg-emerald-500/90"
                     role="switch"
-                    aria-checked="true"
-                    data-checked="true"
+                    aria-checked={userDetails?.securityAlerts ? 'true' : 'false'}
+                    data-checked={userDetails?.securityAlerts}
+                    onClick={() => {
+                      if (!userDetails) return;
+
+                      setUserDetails((prev) =>
+                        prev ? { ...prev, securityAlerts: !prev.securityAlerts } : prev
+                      );
+                    }}
                   >
                     <span className="absolute left-0.5 h-5 w-5 rounded-full bg-neutral-300 transition-all group-data-[checked=true]:translate-x-4 group-data-[checked=true]:bg-white"></span>
                   </button>
@@ -455,17 +596,27 @@ const SettingsPage = () => {
                   </div>
                   <button
                     type="button"
-                    className="toggle group relative inline-flex h-6 w-10 items-center rounded-full border border-neutral-800 bg-neutral-900 transition-colors data-[checked=true]:bg-emerald-500/90"
+                    className="cursor-pointer toggle group relative inline-flex h-6 w-10 items-center rounded-full border border-neutral-800 bg-neutral-900 transition-colors data-[checked=true]:bg-emerald-500/90"
                     role="switch"
-                    aria-checked="false"
-                    data-checked="false"
+                    aria-checked={userDetails?.weeklySummary ? 'true' : 'false'}
+                    data-checked={userDetails?.weeklySummary}
+                    onClick={() => {
+                      if (!userDetails) return;
+
+                      setUserDetails((prev) =>
+                        prev ? { ...prev, weeklySummary: !prev.weeklySummary } : prev
+                      );
+                    }}
                   >
                     <span className="absolute left-0.5 h-5 w-5 rounded-full bg-neutral-300 transition-all group-data-[checked=true]:translate-x-4 group-data-[checked=true]:bg-white"></span>
                   </button>
                 </div>
               </div>
               <div className="mt-5 flex items-center justify-end">
-                <button className="notify-save inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-sm hover:bg-neutral-800">
+                <button
+                  onClick={updatePreferences}
+                  className="cursor-pointer notify-save inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-sm hover:bg-neutral-800"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -482,7 +633,7 @@ const SettingsPage = () => {
                     <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
                     <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
                   </svg>{' '}
-                  Save preferences
+                  Save Preferences
                 </button>
               </div>
             </div>
@@ -519,7 +670,8 @@ const SettingsPage = () => {
                 </div>
                 <button
                   id="delete-account"
-                  className="inline-flex items-center gap-2 rounded-lg bg-red-500/10 text-red-400 px-3 py-1.5 text-sm border border-red-500/30 hover:bg-red-500/20"
+                  onClick={deleteAccount}
+                  className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-red-500/10 text-red-400 px-3 py-1.5 text-sm border border-red-500/30 hover:bg-red-500/20"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -13,6 +13,8 @@ import { validateEmail, validatePassword } from '../../utils/validateFields';
 import LoadingComponent from '../../components/loading-component/LoadingComponent';
 import { loginUser } from '../../api/user-services/login-user/loginUser';
 import { useAuth } from '../../hooks/useAuth';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { useUser } from '../../hooks/useUser';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -21,6 +23,8 @@ const LoginPage = () => {
   const { addAlert } = useAlert();
   const { isLoading, setIsLoading } = useLoading();
   const { setAuthenticated } = useAuth();
+  const { setLocalStorageItem } = useLocalStorage();
+  const { setUser } = useUser();
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -51,14 +55,13 @@ const LoginPage = () => {
       addAlert: addAlert,
       setIsLoading: setIsLoading,
       setAuthenticated: setAuthenticated,
+      setLocalStorageItem: setLocalStorageItem,
+      setUser: setUser,
     });
   };
 
   return (
-    <div
-      className="min-h-screen flex flex-col lg:flex-row bg-black"
-      style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" }}
-    >
+    <div className="min-h-screen flex flex-col lg:flex-row bg-black">
       {isLoading && <LoadingComponent />}
       {/* Left column: sign‑in form  */}
       <section className="flex-1 flex pt-8 pr-8 pb-8 pl-8 items-center justify-center">

@@ -19,6 +19,8 @@ export const loginUser = async (props: loginUserProps) => {
       props.addAlert('Login Successfully!', 'success');
       logger.info(res.data);
       props.setAuthenticated(true);
+      props.setLocalStorageItem('user-id', res.data.data.userId);
+      props.setUser(res.data.data.userId);
       props.setIsLoading(false);
       props.navigate('/dashboard');
     } else {

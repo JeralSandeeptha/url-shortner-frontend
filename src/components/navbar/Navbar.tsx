@@ -4,12 +4,14 @@ import { logoutUser } from '../../api/user-services/logout-user/logoutUser';
 import { useLoading } from '../../hooks/useLoading';
 import { useAlert } from '../../hooks/useAlert';
 import { useAuth } from '../../hooks/useAuth';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { addAlert } = useAlert();
   const { setIsLoading } = useLoading();
   const { setAuthenticated } = useAuth();
+  const { clearLocalStorageItem } = useLocalStorage();
 
   const handleLogout = () => {
     const confirmed = window.confirm('Are you sure you want to log out?');
@@ -20,6 +22,7 @@ const Navbar = () => {
       setIsLoading,
       navigate,
       setAuthenticated,
+      clearLocalStorageItem,
     });
   };
 
@@ -83,7 +86,7 @@ const Navbar = () => {
           </svg>
           <span className="text-sm font-medium">Links</span>
         </Link>
-        <Link
+        {/* <Link
           to="/dashboard/microsite"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-300 hover:bg-neutral-900"
         >
@@ -105,8 +108,8 @@ const Navbar = () => {
             <path d="M2 12h20"></path>
           </svg>
           <span className="text-sm font-medium">Microsite</span>
-        </Link>
-        <Link
+        </Link> */}
+        {/* <Link
           to="/dashboard/campaigns"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-300 hover:bg-neutral-900"
         >
@@ -128,8 +131,8 @@ const Navbar = () => {
             <path d="M8 6v8"></path>
           </svg>
           <span className="text-sm font-medium">Campaigns</span>
-        </Link>
-        <Link
+        </Link> */}
+        {/* <Link
           to="/dashboard/custom-link"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-300 hover:bg-neutral-900"
         >
@@ -152,7 +155,7 @@ const Navbar = () => {
             <circle cx="4" cy="20" r="2"></circle>
           </svg>
           <span className="text-sm font-medium">Custom Link</span>
-        </Link>
+        </Link> */}
         <Link
           to="/dashboard/settings"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-300 hover:bg-neutral-900"

@@ -1,4 +1,5 @@
 import DashboardHeader from '../../components/dashboard-header/DashboardHeader';
+import { linkStatus } from '../../constants/link-status';
 
 const CustomLinkPage = () => {
   return (
@@ -9,7 +10,7 @@ const CustomLinkPage = () => {
       {/* Content */}
       <section className="sm:px-6 max-w-7xl mr-auto ml-auto pt-8 pr-4 pb-8 pl-4 text-neutral-200">
         <div className="space-y-6">
-          Builder Toolbar
+          <h1>Builder Toolbar</h1>
           <div className="rounded-2xl border border-neutral-900 bg-neutral-950 p-5 sm:p-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
@@ -53,7 +54,7 @@ const CustomLinkPage = () => {
                 </div>
                 <button
                   id="save-link"
-                  className="inline-flex items-center gap-2 rounded-lg bg-neutral-100 text-black px-3.5 py-2 text-sm font-medium hover:bg-neutral-200"
+                  className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-neutral-100 text-black px-3.5 py-2 text-sm font-medium hover:bg-neutral-200"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -160,8 +161,17 @@ const CustomLinkPage = () => {
                         id="status"
                         className="bg-transparent py-2.5 pl-2 pr-6 text-sm text-neutral-200 outline-none w-full"
                       >
-                        <option className="bg-neutral-900">Active</option>
-                        <option className="bg-neutral-900">Paused</option>
+                        {linkStatus.map((linkStatus) => {
+                          return (
+                            <option
+                              className="bg-neutral-900"
+                              value={linkStatus.value}
+                              key={linkStatus.value}
+                            >
+                              {linkStatus.label}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>
@@ -515,7 +525,7 @@ const CustomLinkPage = () => {
               <div className="flex items-center gap-2">
                 <button
                   id="reset-form"
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm hover:bg-neutral-800"
+                  className="cursor-pointer inline-flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm hover:bg-neutral-800"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -537,7 +547,7 @@ const CustomLinkPage = () => {
                 </button>
                 <button
                   id="save-link-footer"
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-neutral-100 text-black px-3 py-1.5 text-sm font-medium hover:bg-neutral-200"
+                  className="cursor-pointer inline-flex items-center gap-1.5 rounded-lg bg-neutral-100 text-black px-3 py-1.5 text-sm font-medium hover:bg-neutral-200"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
