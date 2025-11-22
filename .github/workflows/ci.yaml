@@ -38,19 +38,19 @@ jobs:
           git branch -a
           git log -1 --oneline
 
-      # Install Playwright Browsers
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
-
       # Install Dependencies
       - name: Install dependencies
         run: npm ci
+
+      # Install Playwright Browsers
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
 
       # Unit Testing
       - name: Run unit tests
         run: npm run test
 
-      # E2@ Testing
+      # E2E Testing
       - name: Run E2e tests
         run: npm run test:e2e
 
@@ -66,12 +66,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # Set branch-specific repo name
+      - name: Set repo name
+        id: set-repo
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          BRANCH_NAME=$(echo $BRANCH_NAME | sed 's/\//-/g')
+          REPO_NAME="url-shortner-frontend-service-${BRANCH_NAME}"
+          echo "repo_name=$REPO_NAME" >> $GITHUB_OUTPUT
+          echo "Using repository: $REPO_NAME"
+
       # Build Docker Image
       - name: Build Docker Image
         run: |
-          docker build -t jeralsandeeptha/url-shortner-frontend:${{ github.sha }} .
+          docker build -t jeralsandeeptha/${{ steps.set-repo.outputs.repo_name }}:${{ github.sha }}
 
       # Push Docker Image
       - name: Push Docker Image
         run: |
-          docker push jeralsandeeptha/url-shortner-frontend:${{ github.sha }}
+          docker push jeralsandeeptha/${{ steps.set-repo.outputs.repo_name }}:${{ github.sha }}
