@@ -9,11 +9,11 @@ export default defineConfig({
       '**/node_modules/**',
       '**/dist/**',
       '**/tests/e2e/**', // Exclude Playwright tests
-      '**/*.e2e.{test,spec}.{js,jsx,ts,tsx}'
+      '**/*.e2e.{test,spec}.{js,jsx,ts,tsx}',
     ],
     include: [
       '**/*.{test,spec}.{js,jsx,ts,tsx}',
-      '!**/tests/e2e/**' // Explicitly exclude e2e tests
-    ]
+      '!**/tests/e2e/**', // Explicitly exclude e2e tests
+    ],
   },
 });

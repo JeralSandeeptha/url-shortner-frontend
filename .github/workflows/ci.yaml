@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-        
+
       # Verify Tools
       - name: Verify tools
         run: |
@@ -45,11 +45,11 @@ jobs:
       # Unit Testing
       - name: Run unit tests
         run: npm test
-      
+
       # E2@ Testing
       - name: Run E2e tests
         run: npm test:e2e
-      
+
       # Build Project
       - name: Build project
         run: |
