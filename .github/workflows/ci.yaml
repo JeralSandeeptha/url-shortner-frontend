@@ -38,10 +38,14 @@ jobs:
           git branch -a
           git log -1 --oneline
 
+      # Install Playwright Browsers
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
       # Install Dependencies
       - name: Install dependencies
         run: npm ci
-
+        
       # Unit Testing
       - name: Run unit tests
         run: npm run test
