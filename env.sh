@@ -12,13 +12,13 @@ envsubst '$VITE_API_URL $MODE' < /usr/share/nginx/html/env.template.js > /usr/sh
 # Inject env.js script tag into index.html before the main script
 # This ensures window._env_ is available before the app loads
 if ! grep -q '<script src="/env.js"></script>' /usr/share/nginx/html/index.html; then
-  # Use a temporary file to inject the script tag
-  cat > /tmp/inject_env.js << 'EOF'
-    <script src="/env.js"></script>
-EOF
-  # Insert the script tag before the main script
-  sed -i '/<script type="module" src="\/src\/main.tsx"><\/script>/r /tmp/inject_env.js' /usr/share/nginx/html/index.html
-  rm -f /tmp/inject_env.js
+  # Use awk to inject the script tag (more reliable on Alpine)
+  awk '
+    /<script type="module" src="\/src\/main.tsx"><\/script>/ {
+      print "    <script src=\"/env.js\"></script>"
+    }
+    { print }
+  ' /usr/share/nginx/html/index.html > /tmp/index.html.new && mv /tmp/index.html.new /usr/share/nginx/html/index.html
 fi
 
 # Start Nginx
