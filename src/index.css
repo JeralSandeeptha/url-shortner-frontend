@@ -1,6 +1,38 @@
 @import 'tailwindcss';
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
   font-family: 'Roboto', sans-serif;
+}
+
+@keyframes glow-orbit {
+  0% {
+    box-shadow: 
+      10px 0 20px rgba(16, 185, 129, 0.4),
+      0 0 10px rgba(34, 197, 94, 0.2);
+  }
+  25% {
+    box-shadow: 
+      0 10px 20px rgba(16, 185, 129, 0.4),
+      0 0 10px rgba(34, 197, 94, 0.2);
+  }
+  50% {
+    box-shadow: 
+      -10px 0 20px rgba(34, 197, 94, 0.4),
+      0 0 10px rgba(16, 185, 129, 0.2);
+  }
+  75% {
+    box-shadow: 
+      0 -10px 20px rgba(34, 197, 94, 0.4),
+      0 0 10px rgba(16, 185, 129, 0.2);
+  }
+  100% {
+    box-shadow: 
+      10px 0 20px rgba(16, 185, 129, 0.4),
+      0 0 10px rgba(34, 197, 94, 0.2);
+  }
+}
+
+.glow-animate {
+  animation: glow-orbit 4s linear infinite;
 }
