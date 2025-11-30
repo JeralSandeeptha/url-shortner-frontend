@@ -11,4 +11,5 @@ const getEnv = (key: string): string | undefined => {
 export const config = {
   VITE_API_URL: getEnv('VITE_API_URL') || 'http://localhost:5000',
   MODE: getEnv('MODE') || 'production',
+  VITE_DOMAIN: getEnv('VITE_DOMAIN'),
 };

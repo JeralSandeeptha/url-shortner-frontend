@@ -6,13 +6,14 @@ import { deleteLink } from '../../api/link-services/delete-link/deleteLink';
 import { useAlert } from '../../hooks/useAlert';
 import { useLoading } from '../../hooks/useLoading';
 import logger from '../../utils/logger';
+import { config } from '../../config/envConfig';
 
 interface LinkRowProps extends LinkProps {
   onDelete?: () => void;
 }
 
 const LinkRow = (props: LinkRowProps) => {
-  const siteBaseURL = 'http://localhost:5173';
+  const siteBaseURL = `${config.VITE_DOMAIN}`;
 
   const inputRef = useRef<HTMLAnchorElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);

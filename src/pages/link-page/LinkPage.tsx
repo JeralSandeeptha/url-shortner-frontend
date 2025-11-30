@@ -9,9 +9,10 @@ import { deleteLink } from '../../api/link-services/delete-link/deleteLink';
 import { useLoading } from '../../hooks/useLoading';
 import { updateLink } from '../../api/link-services/update-link/updatelink';
 import UpdateLinkModal from '../../components/update-link-modal/UpdateLinkModal';
+import { config } from '../../config/envConfig';
 
 const LinkPage = () => {
-  const siteBaseURL = 'http://localhost:5173';
+  const siteBaseURL = `${config.VITE_DOMAIN}`;
   const { linkId } = useParams();
   const [link, setLink] = useState<Link | undefined>(undefined);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -75,6 +76,9 @@ const LinkPage = () => {
     });
     setIsUpdateModalOpen(false);
   };
+
+  console.log(siteBaseURL);
+  console.log(config);
 
   return (
     <>
