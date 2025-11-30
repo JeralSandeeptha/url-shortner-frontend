@@ -25,7 +25,9 @@ const Accordion = ({ title, children }: AccordionProps) => {
         <span className="font-medium text-white">{title}</span>
         <ChevronIcon />
       </summary>
-      <div className="mt-5 text-sm text-neutral-400 rounded-md px-4 py-4 border border-emerald-500/30">{children}</div>
+      <div className="mt-5 text-sm text-neutral-400 rounded-md px-4 py-4 border border-emerald-500/30">
+        {children}
+      </div>
     </details>
   );
 };

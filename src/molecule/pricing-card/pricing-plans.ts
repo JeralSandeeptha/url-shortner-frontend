@@ -7,11 +7,7 @@ export const pricingPlans: PricingPlan[] = [
     price: '$0',
     period: 'forever',
     isPopular: false,
-    features: [
-      '1,000 clicks / mo',
-      'Basic analytics',
-      '1 custom domain',
-    ],
+    features: ['1,000 clicks / mo', 'Basic analytics', '1 custom domain'],
     buttonText: 'Get started',
     buttonHref: '#',
   },

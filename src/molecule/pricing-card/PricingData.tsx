@@ -24,16 +24,33 @@ const CheckIcon = () => (
 
 const PricingCard = ({ plan }: PricingCardProps) => {
   const isPopular = plan.isPopular;
-  
+
   return (
     <div
       className={`rounded-2xl border p-6 flex flex-col justify-between flex-grow ${
-        isPopular ? 'relative border-2 border-emerald-800 bg-gradient-to-br from-emerald-900/20 to-lime-900/40 glow-animate' : 'border-neutral-700'
+        isPopular
+          ? 'relative border-2 border-emerald-800 bg-gradient-to-br from-emerald-900/20 to-lime-900/40 glow-animate'
+          : 'border-neutral-700 bg-white/5 bg-blur-3xl'
       } bg-neutral-950`}
     >
       {isPopular && (
-        <div className="absolute -top-3.5 right-4 text-[11px] rounded-full px-3 py-1 pb-1.5 bg-emerald-500/90 border text-white border-emerald-400/30">
-          Most popular
+        <div className="absolute -top-3.5 right-4 text-[11px] rounded-full px-3 py-1.5 pb-1.7 bg-emerald-700/90 border text-white font-bold border-emerald-400/30 flex items-center gap-1.5 whitespace-nowrap">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="11"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            data-lucide="star"
+            className="lucide lucide-star text-yellow-300 flex-shrink-0"
+          >
+            <polygon points="12 2 15.09 10.26 24 10.27 17 16.14 19.09 24.26 12 18.9 4.91 24.26 7 16.14 0 10.27 8.91 10.26 12 2"></polygon>
+          </svg>
+          <span>Most popular</span>
         </div>
       )}
       <div className="flex flex-col">

@@ -16,7 +16,7 @@ const Testimonials = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="max-w-3xl">
-          <h2 className="sm:text-5xl md:text-6xl text-4xl font-semibold tracking-tight mb-12 text-white">
+          <h2 className="sm:text-4xl text-3xl  font-semibold tracking-tight mb-12 text-white">
             Focus on profit, we’ll handle the rest
           </h2>
         </div>

@@ -24,7 +24,7 @@ const CheckIcon = () => (
 
 const PricingCard = ({ plan }: PricingCardProps) => {
   const isPopular = plan.isPopular;
-  
+
   return (
     <div
       className={`rounded-2xl border p-6 flex flex-col ${
@@ -37,7 +37,11 @@ const PricingCard = ({ plan }: PricingCardProps) => {
         </div>
       )}
 
-      <div className={`text-sm font-medium text-neutral-300 ${isPopular ? 'text-md text-emerald-400' : 'text-md text-emerald-400'}`}>{plan.name}</div>
+      <div
+        className={`text-sm font-medium text-neutral-300 ${isPopular ? 'text-md text-emerald-400' : 'text-md text-emerald-400'}`}
+      >
+        {plan.name}
+      </div>
       <div className="mt-2 text-3xl font-semibold">{plan.price}</div>
       <div className="text-xs text-neutral-500">{plan.period}</div>
 
