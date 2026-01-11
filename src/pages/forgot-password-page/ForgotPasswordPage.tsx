@@ -1,11 +1,12 @@
+import { Link } from 'react-router-dom';
 import forgotpasswordPage from '../../data/forgot_password.json';
 
 const ForgotPasswordPage = () => {
   return (
     <div className="min-h-screen flex text-neutral-100 bg-black pr-4 pl-4 items-center justify-center">
       <div className="w-full max-w-md">
-        <a
-          href="/login"
+        <Link
+          to="/login"
           className="inline-flex items-center gap-2 text-neutral-300 hover:text-neutral-100 mb-6"
         >
           <svg
@@ -27,7 +28,7 @@ const ForgotPasswordPage = () => {
           <span className="text-sm">
             {forgotpasswordPage.sections?.[0]?.content?.links?.[1]?.text}
           </span>
-        </a>
+        </Link>
 
         <div className="rounded-xl border p-6 sm:p-8 border-neutral-800 bg-neutral-950">
           <div className="mb-6">
@@ -114,12 +115,12 @@ const ForgotPasswordPage = () => {
 
           <div className="flex gap-3 items-center mt-4 text-sm text-neutral-400">
             {forgotpasswordPage.sections?.[0]?.content?.texts?.[4]?.rememberText}
-            <a
-              href={forgotpasswordPage.sections?.[0]?.content?.links?.[0]?.url}
+            <Link
+              to="/login"
               className="text-neutral-200 hover:text-white font-medium"
             >
               {forgotpasswordPage.sections?.[0]?.content?.links?.[0]?.text}
-            </a>
+            </Link>
           </div>
         </div>
 
