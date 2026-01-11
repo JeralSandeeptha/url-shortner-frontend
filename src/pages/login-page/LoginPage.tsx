@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAlert } from '../../hooks/useAlert';
 import { useLoading } from '../../hooks/useLoading';
 import { sanitizeEmail, sanitizePassword } from '../../utils/sanitizeFields';
@@ -68,9 +68,11 @@ const LoginPage = () => {
         <div className="w-full max-w-md">
           <div className="flex flex-col gap-6">
             {/* Logo  */}
-            <div className="w-12 h-12 rounded-2xl border backdrop-blur flex items-center justify-center border-neutral-800 bg-neutral-950/60">
-              <span className="text-sm font-semibold tracking-tight text-white">LL</span>
-            </div>
+            <Link to='/'>
+              <div className="w-12 h-12 rounded-2xl border backdrop-blur flex items-center justify-center border-neutral-800 bg-neutral-950/60">
+                <span className="text-sm font-semibold tracking-tight text-white">LL</span>
+              </div>
+            </Link>
 
             {/* Heading  */}
             <HeadingTwo
@@ -159,12 +161,12 @@ const LoginPage = () => {
                     {loginPage?.sections?.[0]?.content?.texts?.[4]?.rememberText}
                   </span>
                 </label>
-                <a
-                  href={loginPage?.sections?.[0]?.content?.links?.[0]?.url}
+                <Link
+                  to="/forgot-password"
                   className="transition-colors hover:text-emerald-300 text-emerald-400"
                 >
                   {loginPage?.sections?.[0]?.content?.links?.[0]?.text}
-                </a>
+                </Link>
               </div>
 
               <button
@@ -209,12 +211,12 @@ const LoginPage = () => {
 
             <p className="flex items-center justify-center text-center text-sm text-neutral-500 gap-2">
               {loginPage?.sections?.[0]?.content?.texts?.[2]?.createAccountText}
-              <a
-                href={loginPage?.sections?.[0]?.content?.links?.[1]?.url}
+              <Link
+                to='/register'
                 className="transition-colors hover:text-emerald-300 text-emerald-400"
               >
                 {loginPage?.sections?.[0]?.content?.links?.[1]?.text}
-              </a>
+              </Link>
             </p>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { registerUser } from '../../api/user-services/register-user/registerUser';
 import { sanitizeEmail, sanitizePassword } from '../../utils/sanitizeFields';
 import { validateEmail, validatePassword } from '../../utils/validateFields';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAlert } from '../../hooks/useAlert';
 import LoadingComponent from '../../components/loading-component/LoadingComponent';
 import { useLoading } from '../../hooks/useLoading';
@@ -67,9 +67,11 @@ const RegisterPage = () => {
         <div className="w-full max-w-md">
           <div className="flex flex-col gap-6">
             {/* Logo  */}
-            <div className="w-12 h-12 rounded-2xl border backdrop-blur flex items-center justify-center border-neutral-800 bg-neutral-950/60">
-              <span className="text-sm font-semibold tracking-tight text-white">LL</span>
-            </div>
+            <Link to='/'>
+              <div className="w-12 h-12 rounded-2xl border backdrop-blur flex items-center justify-center border-neutral-800 bg-neutral-950/60">
+                <span className="text-sm font-semibold tracking-tight text-white">LL</span>
+              </div>
+            </Link>
 
             {/* Heading  */}
             <HeadingTwo
@@ -166,12 +168,12 @@ const RegisterPage = () => {
                     {registerPage?.sections?.[0]?.content?.texts?.[4]?.agreeText}
                   </span>
                 </label>
-                <a
-                  href={registerPage?.sections?.[0]?.content?.links?.[0]?.url}
+                <Link
+                  to="/terms-and-conditions"
                   className="transition-colors hover:text-emerald-300 text-emerald-400"
                 >
                   {registerPage?.sections?.[0]?.content?.links?.[0]?.text}
-                </a>
+                </Link>
               </div>
 
               <button
@@ -216,12 +218,12 @@ const RegisterPage = () => {
 
             <p className="flex items-center justify-center text-center text-sm text-neutral-500 gap-2">
               {registerPage?.sections?.[0]?.content?.texts?.[2]?.createAccountText}
-              <a
-                href={registerPage?.sections?.[0]?.content?.links?.[1]?.url}
+              <Link
+                to='/login'
                 className="transition-colors hover:text-emerald-300 text-emerald-400"
               >
                 {registerPage?.sections?.[0]?.content?.links?.[1]?.text}
-              </a>
+              </Link>
             </p>
           </div>
         </div>

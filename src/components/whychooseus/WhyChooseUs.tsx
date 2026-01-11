@@ -37,7 +37,7 @@ const WhyChooseUs = () => {
                     <path d="M8 6v8"></path>
                   </svg>
                 </div>
-                <div className="font-medium">Marketing</div>
+                <div className="font-medium text-white">Marketing</div>
               </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +81,7 @@ const WhyChooseUs = () => {
                     <path d="M21 16v2a4 4 0 0 1-4 4h-5"></path>
                   </svg>
                 </div>
-                <div className="font-medium">Support</div>
+                <div className="font-medium text-white">Support</div>
               </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +135,7 @@ const WhyChooseUs = () => {
                     <path d="m9.228 13.148-.923.383"></path>
                   </svg>
                 </div>
-                <div className="font-medium">Engineering</div>
+                <div className="font-medium text-white">Engineering</div>
               </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
