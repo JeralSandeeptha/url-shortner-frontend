@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Features = () => {
   return (
     <section className="bg-black border-neutral-900 border-t pt-20 pb-20" id="product">
@@ -30,7 +32,7 @@ const Features = () => {
                   <path d="m9 12 2 2 4-4"></path>
                 </svg>
                 <div>
-                  <div className="font-medium">Privacy-first analytics</div>
+                  <div className="font-medium text-white">Privacy-first analytics</div>
                   <p className="text-sm text-neutral-400">
                     No cookies. GDPR-friendly insights with geos, devices, referrers.
                   </p>
@@ -55,7 +57,7 @@ const Features = () => {
                   <path d="M2 12h20"></path>
                 </svg>
                 <div>
-                  <div className="font-medium">Custom domains</div>
+                  <div className="font-medium text-white">Custom domains</div>
                   <p className="text-sm text-neutral-400">
                     Bring your brand: link.yourdomain.com with HTTPS and DNS checks.
                   </p>
@@ -81,7 +83,7 @@ const Features = () => {
                   <path d="M18 9a9 9 0 0 1-9 9"></path>
                 </svg>
                 <div>
-                  <div className="font-medium">Smart routing</div>
+                  <div className="font-medium text-white">Smart routing</div>
                   <p className="text-sm text-neutral-400">
                     Route by device, country, or campaign with rules and fallbacks.
                   </p>
@@ -106,7 +108,7 @@ const Features = () => {
                   <path d="m14.5 4-5 16"></path>
                 </svg>
                 <div>
-                  <div className="font-medium">Developer‑friendly</div>
+                  <div className="font-medium text-white">Developer‑friendly</div>
                   <p className="text-sm text-neutral-400">
                     REST and webhook APIs, SDKs, and rate-limited tokens for teams.
                   </p>
@@ -114,8 +116,8 @@ const Features = () => {
               </li>
             </ul>
             <div className="mt-8 flex items-center gap-3">
-              <a
-                href="#pricing"
+              <Link
+                to="/pricing"
                 className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors text-black bg-neutral-100 hover:bg-neutral-200"
               >
                 <svg
@@ -136,7 +138,7 @@ const Features = () => {
                   <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path>
                 </svg>
                 <span>View pricing</span>
-              </a>
+              </Link>
               <a
                 href="#resources"
                 className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium border transition-colors text-neutral-200 border-neutral-800 bg-neutral-950 hover:bg-neutral-900"
@@ -174,23 +176,23 @@ const Features = () => {
               <div className="mt-6 grid sm:grid-cols-3 gap-4">
                 <div className="rounded-lg border p-4 border-neutral-800 bg-neutral-900/40">
                   <div className="text-xs text-neutral-400">Total clicks</div>
-                  <div className="text-2xl font-semibold mt-1">12,483</div>
+                  <div className="text-2xl font-semibold mt-1 text-white">12,483</div>
                   <div className="mt-2 h-1.5 rounded-full bg-neutral-800">
                     <div className="h-1.5 rounded-full bg-emerald-500 w-[68%]"></div>
                   </div>
                 </div>
                 <div className="rounded-lg border p-4 border-neutral-800 bg-neutral-900/40">
                   <div className="text-xs text-neutral-400">Unique visitors</div>
-                  <div className="text-2xl font-semibold mt-1">8,921</div>
+                  <div className="text-2xl font-semibold mt-1 text-white">8,921</div>
                   <div className="mt-2 h-1.5 rounded-full bg-neutral-800">
                     <div className="h-1.5 rounded-full bg-indigo-500 w-[54%]"></div>
                   </div>
                 </div>
                 <div className="rounded-lg border p-4 border-neutral-800 bg-neutral-900/40">
                   <div className="text-xs text-neutral-400">Top source</div>
-                  <div className="text-2xl font-semibold mt-1">Twitter</div>
+                  <div className="text-2xl font-semibold mt-1 text-white">Twitter</div>
                   <div className="mt-2 flex gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] bg-neutral-800">
+                    <span className="inline-flex text-white items-center gap-1 rounded-md px-2 py-1 text-[11px] bg-neutral-800">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -212,7 +214,7 @@ const Features = () => {
                       </svg>{' '}
                       38%
                     </span>
-                    <span className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] bg-neutral-800">
+                    <span className="inline-flex text-white items-center gap-1 rounded-md px-2 py-1 text-[11px] bg-neutral-800">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"

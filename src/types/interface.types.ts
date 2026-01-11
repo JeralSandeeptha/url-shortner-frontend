@@ -37,3 +37,25 @@ export type CreateLinkFields = Pick<
   Link,
   'long_url' | 'short_url' | 'userId' | 'campaignId' | 'tags' | 'status'
 >;
+
+export interface PricingPlan {
+  id: string;
+  name: string;
+  price: string;
+  period: string;
+  isPopular?: boolean;
+  features: string[];
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+export interface AccordionProps {
+  title: string;
+  children: React.ReactNode;
+}

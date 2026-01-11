@@ -1,14 +1,16 @@
+import { getYear } from "../../utils/getDate";
+
 const Footer = () => {
   return (
     <footer className="border-t border-neutral-900 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <div className="text-lg font-semibold mb-2">LumenLink</div>
+            <div className="text-lg font-semibold mb-2 text-white">LumenLink</div>
             <p className="text-sm text-neutral-400">Fast, privacy‑first URL shortener for teams.</p>
           </div>
           <div>
-            <div className="text-sm font-semibold mb-2">Product</div>
+            <div className="text-sm font-semibold mb-2 text-white">Product</div>
             <ul className="space-y-2 text-sm text-neutral-400">
               <li>
                 <a className="transition-colors hover:text-neutral-200" href="#product">
@@ -28,7 +30,7 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <div className="text-sm font-semibold mb-2">Resources</div>
+            <div className="text-sm font-semibold mb-2 text-white">Resources</div>
             <ul className="space-y-2 text-sm text-neutral-400">
               <li>
                 <a className="transition-colors hover:text-neutral-200" href="#resources">
@@ -48,7 +50,7 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <div className="text-sm font-semibold mb-2">Company</div>
+            <div className="text-sm font-semibold mb-2 text-white">Company</div>
             <ul className="space-y-2 text-sm text-neutral-400">
               <li>
                 <a className="transition-colors hover:text-neutral-200" href="#">
@@ -70,7 +72,7 @@ const Footer = () => {
         </div>
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
           <div>
-            © <span id="year">2025</span> LumenLink. All rights reserved.
+            © <span id="year">{getYear()}</span> LumenLink. All rights reserved.
           </div>
           <div className="flex items-center gap-4">
             <a href="#" className="transition-colors hover:text-neutral-300">
