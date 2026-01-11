@@ -30,7 +30,7 @@ const Testimonials = () => {
                 className="w-10 h-10 rounded-full border border-neutral-800"
               />
               <div>
-                <div className="font-medium">Mohamed Elzakey</div>
+                <div className="font-medium text-white">Mohamed Elzakey</div>
                 <div className="text-sm text-neutral-400">Tirhal, Sudan</div>
               </div>
             </div>
@@ -72,7 +72,7 @@ const Testimonials = () => {
                 className="w-10 h-10 rounded-full border border-neutral-800"
               />
               <div>
-                <div className="font-medium">Bader Alarjani</div>
+                <div className="font-medium text-white">Bader Alarjani</div>
                 <div className="text-sm text-neutral-400">Kaiian, Saudi Arabia</div>
               </div>
             </div>
@@ -114,7 +114,7 @@ const Testimonials = () => {
                 className="w-10 h-10 rounded-full border border-neutral-800"
               />
               <div>
-                <div className="font-medium">Harith Al Harthy</div>
+                <div className="font-medium text-white">Harith Al Harthy</div>
                 <div className="text-sm text-neutral-400">Otaxi, Oman</div>
               </div>
             </div>
